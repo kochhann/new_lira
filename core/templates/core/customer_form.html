@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="heading-block fancy-title nobottomborder">
+    <table class="table">
+        <tr>
+            <td width="90%"><h4 style="padding-top: 10px;">Novo Cliente</h4></td>
+            <td align="right"><a href="{% url 'list_customer' %}"
+                     class="button button-small button-circle button-border button-red">Cancelar</a></td>
+        </tr>
+    </table>
+</div>
+
+<!--<div class="form-result"></div>-->
+
+<div class="row">
+	<div class="col-lg">
+		<form id="customer-form" class="row" action="#" method="post" enctype="multipart/form-data">
+			{{ form.non_field_errors }}
+			{% if form.errors %}
+			<div class="style-msg errormsg">
+				<div class="sb-msg"  style="padding-bottom:0;">
+					{{ form.comp_id.errors }}
+				</div>
+			</div>
+			{% endif %}
+			{% csrf_token %}
+			<div class="form-process">
+				<div class="css3-spinner">
+					<div class="css3-spinner-scaler"></div>
+				</div>
+			</div>
+			<div class="col-12">
+				<div class="card bg-light">
+					<div class="card-body">
+						<div class="row">
+							<input type="hidden" name="company" value="{{company}}">
+							<input type="hidden" name="type_of" value="1">
+							<div class="col-md-6 form-group">
+								<label for="comp_id">CNPJ / CPF<small class="text-danger">*</small></label>
+								<input type="text" name="comp_id" id="comp_id" class="form-control cpfcnpj required"
+									   value="" placeholder="Utilize apenas números">
+							</div>
+							<div class="col-6 form-group">
+								<label for="corporate_name">Nome / Razão Social<small class="text-danger">*</small></label>
+								<input type="text" name="corporate_name" id="corporate_name"
+									   class="form-control required" value="">
+							</div>
+							<div class="col-6 form-group">
+								<label for="name">Nome Comercial<small class="text-danger">*</small></label>
+								<input type="text" name="name" id="name" class="form-control" value="">
+							</div>
+							<div class="col-6 form-group">
+								<label for="state_subscription">Insc. Estadual</label>
+								<input type="text" name="state_subscription" id="state_subscription"
+									   class="form-control" value="" placeholder="">
+							</div>
+							<div class="col-6 form-group">
+								<label for="city_subscription">Insc. Municipal</label>
+								<input type="text" name="city_subscription" id="city_subscription"
+									   class="form-control" value="" placeholder="">
+							</div>
+							<div class="divider divider-rounded divider-center"><i class="icon-map-marker"></i></div>
+							<div class="col-6 form-group">
+								<label for="estado">Estado<small class="text-danger">*</small></label>
+								<select name="estado" class="form-select required" id="estado_ddl" onchange="filtra_cidade()">
+									<option value="" selected>-- Estado --</option>
+									{% for item in states %}
+									<option value="{{item.pk}}">{{item}}</option>
+									{% endfor %}
+								</select>
+							</div>
+							<div class="col-6 form-group">
+								<label for="cidade">Cidade<small class="text-danger">*</small></label>
+								<select name="cidade" class="form-select required" id="cidade_ddl">
+									<option value="" selected>-- Cidade --</option>
+								</select>
+							</div>
+							<div class="col-md-12 form-group">
+								<label for="street">Rua<small class="text-danger">*</small></label>
+								<input type="text" name="street" id="street_id" class="form-control required"
+									   value="" placeholder="">
+							</div>
+							<div class="col-md-6 form-group">
+								<label for="number">Número<small class="text-danger">*</small></label>
+								<input type="text" name="number" id="number_id" class="form-control required"
+									   value="" placeholder="">
+							</div>
+							<div class="col-md-6 form-group">
+								<label for="further_info">Complemento</label>
+								<input type="text" name="further_info" id="further_info_id" class="form-control"
+									   value="" placeholder="">
+							</div>
+							<div class="col-md-6 form-group">
+								<label for="neighborhood">Bairro<small class="text-danger">*</small></label>
+								<input type="text" name="neighborhood" id="neighborhood_id" class="form-control required"
+									   value="" placeholder="">
+							</div>
+							<div class="col-md-6 form-group">
+								<label for="zip_code">CEP<small class="text-danger">*</small></label>
+								<input type="text" name="zip_code" id="zip_code_id" class="form-control zipcode required"
+									   value="" placeholder="Utilize apenas números">
+							</div>
+							<div class="col-md-6 form-group">
+								<label for="phone">Telefone<small class="text-danger">*</small></label>
+								<input type="text" name="phone" id="cust-phone" class="form-control phone required"
+									   value="" placeholder="Utilize apenas números">
+							</div>
+							<div class="col-md-6 form-group">
+								<label for="email">E-mail<small class="text-danger">*</small></label>
+								<input type="text" name="email" id="email_id" class="form-control required"
+									   value="" placeholder="">
+							</div>
+							<div class="col-12 form-group">
+								<textarea name="observation" id="obs_id" class="form-control" cols="30" rows="5"
+										  maxlength="1000" style="resize: none;" onkeyup="countChar(this)"></textarea>
+								<div id="charNum">1000</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-6">
+				<button type="submit" name="customer-submit" style="margin: 15px;"
+						class="button button-small button-circle button-border">Salvar</button>
+			</div>
+
+		</form>
+
+	</div>
+
+</div>
+
+{% endblock %}

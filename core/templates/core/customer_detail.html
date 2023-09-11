@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="heading-block fancy-title nobottomborder">
+    <table class="table" style="table-layout: auto;">
+        <tr>
+            <td width="60%"><h4 style="padding-top: 10px;">Detales do cliente</h4></td>
+            <td align="right"><a href="{% url 'list_customer' %}"
+                     class="button button-small button-circle button-border button-red">Voltar</a></td>
+        </tr>
+    </table>
+</div>
+
+<div class="col-12">
+    <div class="card bg-light">
+        <div class="card-body">
+            <div class="row">
+                <h3 style="color: #27292b;">{{object.name}}</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="heading-block fancy-title nobottomborder">
+    <table class="table">
+        <tr>
+            <td width="90%"><h4 style="padding-top: 10px;">Novo Operador</h4></td>
+            <td align="right"><a href="{% url 'list_user' %}"
+                     class="button button-small button-circle button-border button-red">Cancelar</a></td>
+        </tr>
+    </table>
+</div>
+
+<div class="container mw-md">
+    <!-- Form Operador -->
+    <div class="col-lg-12 pl-lg-5 just-text">
+        <form id="new-operator-form" action="#" method="post" class="mb-0">
+            {{ form.non_field_errors }}
+            {{ form.errors }}
+            {% csrf_token %}
+<!--            {{form}}-->
+            <input type="hidden" name="company" value={{company}} />
+            <input type="hidden" name="user" value={{user}} />
+            <div class="form-process">
+                <div class="css3-spinner">
+                    <div class="css3-spinner-scaler"></div>
+                </div>
+            </div>
+            <div class="col-md-12 bottommargin-sm">
+                <input type="text" name="name" value="" class="form-control text-start"
+                       placeholder="Nome" required>
+            </div>
+            <div class="col-md-12 bottommargin-sm">
+                <input type="text" name="email" value="" class="form-control text-start"
+                       placeholder="Email" required>
+            </div>
+            <div class="col-12 form-group">
+                <select name="branch" class="form-select" id="id_branch">
+                    <option value="" selected>-- Filial --</option>
+                    {% for item in branches %}
+                    <option value="{{item.pk}}">{{item}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-12">
+                <button type="submit" name="solicitacao-submit" id="solicitacao-submit"
+                        class="button button-small button-circle button-border button-blue">Salvar</button>
+            </div>
+
+        </form>
+    </div>
+    <div class="w-100 line d-block d-md-none"></div>
+</div>
+
+{% endblock %}

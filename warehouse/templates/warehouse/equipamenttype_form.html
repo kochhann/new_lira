@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="heading-block fancy-title nobottomborder">
+    <table class="table">
+        <tr>
+            <td width="90%"><h4 style="padding-top: 10px;">Novo tipo de equipamento</h4></td>
+            <td align="right"><a href="{% url 'list_equipament_type' %}"
+                     class="button button-small button-circle button-border button-red">Cancelar</a></td>
+        </tr>
+    </table>
+</div>
+
+<!--<div class="form-result"></div>-->
+
+<div class="row">
+	<div class="col-lg">
+		<form id="customer-form" class="row" action="#" method="post" enctype="multipart/form-data">
+			{{ form.non_field_errors }}
+			{% if form.errors %}
+			<div class="style-msg errormsg">
+				<div class="sb-msg"  style="padding-bottom:0;">
+					{{ form.brand.errors }}
+				</div>
+			</div>
+			{% endif %}
+			{% csrf_token %}
+			<div class="form-process">
+				<div class="css3-spinner">
+					<div class="css3-spinner-scaler"></div>
+				</div>
+			</div>
+			<div class="col-12">
+				<div class="card bg-light">
+					<div class="card-body">
+						<div class="row">
+							<input type="hidden" name="company" value="{{company}}">
+							<div class="col-md-6 form-group">
+								<label for="brand">Marca<small class="text-danger">*</small></label>
+								<input type="text" name="brand" id="brand" class="form-control required"
+									   value="">
+							</div>
+							<div class="col-6 form-group">
+								<label for="model">Modelo<small class="text-danger">*</small></label>
+								<input type="text" name="model" id="model"
+									   class="form-control required" value="">
+							</div>
+							<div class="col-6 form-group">
+								<label for="price">Preço unitário</label>
+								<input type="text" name="price" id="price" class="form-control money" value="">
+							</div>
+							<div class="col-6 form-group" style="margin-top: 25px;">
+								<button type="submit" name="eq_type-submit"
+										class="button button-small button-circle button-border">Salvar</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+
+	</div>
+
+</div>
+
+{% endblock %}

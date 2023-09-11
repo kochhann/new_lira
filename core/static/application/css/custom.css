@@ -1,0 +1,46 @@
+/* ----------------------------------------------------------------
+	Custom CSS
+
+	Add all your Custom Styled CSS here for New Styles or
+	Overwriting Default Theme Styles for Better Handling Updates
+-----------------------------------------------------------------*/
+.divider {
+    margin: 5px auto;
+}
+
+
+.content-wrap {
+	position: relative;
+	padding: 20px 0;
+	overflow: hidden;
+}
+
+.button-border.button-lira {
+	color: #f98708;
+	border-color: #f98708;
+}
+
+.button-blue:not(.button-border) { background-color: #f98708 !important; }
+.button-3d.button-blue:hover,
+.button-reveal.button-blue:hover,
+.button-border.button-blue:hover,
+.button-border.button-blue.button-fill::before { background-color: #f98708 !important; }
+
+.button-border.button-blue {
+	color: #f98708;
+	border-color: #f98708;
+}
+
+h3 {
+    color:#f98708;
+}
+
+a {
+    color:#f98708;
+}
+
+.menu-item > .menu-link:hover {
+  color: #f98606;
+}
+
+
