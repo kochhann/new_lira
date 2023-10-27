@@ -3,8 +3,8 @@
 <div class="heading-block fancy-title nobottomborder">
     <table class="table">
         <tr>
-            <td width="90%"><h4 style="padding-top: 10px;">Novo Cliente</h4></td>
-            <td align="right"><a href="{% url 'list_customer' %}"
+			<td width="90%"><h4 style="padding-top: 10px;">Novo Cliente</h4></td>
+			<td align="right"><a href="{% url 'list_customer' %}"
                      class="button button-small button-circle button-border button-red">Cancelar</a></td>
         </tr>
     </table>
@@ -38,26 +38,26 @@
 							<div class="col-md-6 form-group">
 								<label for="comp_id">CNPJ / CPF<small class="text-danger">*</small></label>
 								<input type="text" name="comp_id" id="comp_id" class="form-control cpfcnpj required"
-									   value="" placeholder="Utilize apenas números">
+									   placeholder="Utilize apenas números">
 							</div>
 							<div class="col-6 form-group">
 								<label for="corporate_name">Nome / Razão Social<small class="text-danger">*</small></label>
 								<input type="text" name="corporate_name" id="corporate_name"
-									   class="form-control required" value="">
+									   class="form-control required" value="{{object.corporate_name}}">
 							</div>
 							<div class="col-6 form-group">
 								<label for="name">Nome Comercial<small class="text-danger">*</small></label>
-								<input type="text" name="name" id="name" class="form-control" value="">
+								<input type="text" name="name" id="name" class="form-control" value="{{object.name}}">
 							</div>
 							<div class="col-6 form-group">
 								<label for="state_subscription">Insc. Estadual</label>
 								<input type="text" name="state_subscription" id="state_subscription"
-									   class="form-control" value="" placeholder="">
+									   class="form-control" value="{{object.state_subscription}}" placeholder="">
 							</div>
 							<div class="col-6 form-group">
 								<label for="city_subscription">Insc. Municipal</label>
 								<input type="text" name="city_subscription" id="city_subscription"
-									   class="form-control" value="" placeholder="">
+									   class="form-control" value="{{object.city_subscription}}" placeholder="">
 							</div>
 							<div class="divider divider-rounded divider-center"><i class="icon-map-marker"></i></div>
 							<div class="col-6 form-group">

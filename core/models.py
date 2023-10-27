@@ -17,6 +17,8 @@ class Base(models.Model):
 
 class Company(Base):
     id = models.AutoField('ID', primary_key=True, blank=False, null=False)
+    accountable = models.CharField('Responsável', max_length=100, blank=True, null=True)
+    accountable_id = models.CharField('CPF Responsável', max_length=20, blank=True, null=True)
     comp_id = models.CharField('CNPJ / CPF', max_length=20, blank=False, null=False)
     name = models.CharField('Nome', max_length=100, blank=False, null=False)
     corporate_name = models.CharField('Razão Social', max_length=100, blank=False, null=False)
@@ -32,11 +34,22 @@ class Company(Base):
         self.deactivation_date = timezone.now()
         self.save()
 
+    def update_corporate_name(self, new_string):
+        self.corporate_name = new_string
+        self.save()
+
+
     @property
     def id_printable(self):
         if len(self.comp_id) < 14:
             return re.sub(r'(\d{3})(\d{3})(\d{3})(\d{2})', r'\1.\2.\3-\4', self.comp_id)
         return re.sub(r'(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})', r'\1.\2.\3/\4-\5', self.comp_id)
+
+    @property
+    def acc_id_printable(self):
+        if len(self.accountable_id) < 14:
+            return re.sub(r'(\d{3})(\d{3})(\d{3})(\d{2})', r'\1.\2.\3-\4', self.accountable_id)
+        return re.sub(r'(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})', r'\1.\2.\3/\4-\5', self.accountable_id)
 
     class Meta:
         abstract = True

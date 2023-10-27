@@ -14,7 +14,8 @@ from .views import (
     ResetPasswordCompleteView,
     CustomerList,
     CustomerCreate,
-    CustomerView
+    CustomerView,
+    CustomerUpdate
 )
 
 urlpatterns = [
@@ -30,5 +31,7 @@ urlpatterns = [
     path('customer/list/', CustomerList.as_view(), name='list_customer'),
     path('customer/create/', CustomerCreate.as_view(), name='create_customer'),
     path('customer/create/load-cidades', load_cidades, name='load_cidades'),
-    path('customer/detail/<int:pk>/', CustomerView.as_view(), name='view_customer')
+    path('customer/update/<int:pk>/load-cidades', load_cidades, name='load_cidades'),
+    path('customer/detail/<int:pk>/', CustomerView.as_view(), name='view_customer'),
+    path('customer/update/<int:pk>/', CustomerUpdate.as_view(), name='update_customer')
 ]

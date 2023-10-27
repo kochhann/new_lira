@@ -275,6 +275,28 @@ class CustomerCreate(CreateView):
 
 
 @method_decorator(login_required, name='dispatch')
+class CustomerUpdate(UpdateView):
+    model = Customer
+    form_class = CustomerForm
+    template_name = 'core/customer_form.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(CustomerUpdate, self).get_context_data(**kwargs)
+        states = State.objects.all()
+        us = self.request.user
+        op = OpUser.objects.get(user=us.pk)
+        comp = op.company.pk
+        context['company'] = comp
+        context['states'] = states
+        context['doc_title'] = 'Gestão de clientes'
+        context['top_app_name'] = 'Clientes'
+        context['pt_h1'] = 'Gestão de clientes'
+        context['pt_span'] = ''
+        context['pt_breadcrumb2'] = 'Clientes'
+        return context
+
+
+@method_decorator(login_required, name='dispatch')
 class CustomerView(DetailView):
     model = Customer
 
