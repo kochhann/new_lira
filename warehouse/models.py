@@ -8,6 +8,25 @@ from core.models import (
 )
 
 
+class EquipamentBrand(Base):
+    id = models.AutoField("ID", primary_key=True, blank=False, null=False)
+    owner_comp = models.ForeignKey(HeadCompany, verbose_name='Empresa', on_delete=models.PROTECT, blank=False,
+                                   null=False)
+    name = models.CharField("Nome", max_length=100, blank=True, null=True)
+
+    def soft_delete(self):
+        self.active = False
+        self.deactivation_date = timezone.now()
+        self.save()
+
+    def __str__(self):
+        return self.nome
+
+    class Meta:
+        verbose_name = 'Marca'
+        verbose_name_plural = 'Marcas'
+
+
 class EquipamentType(Base):
     id = models.AutoField("ID", primary_key=True, blank=False, null=False)
     owner_comp = models.ForeignKey(HeadCompany, verbose_name='Empresa', on_delete=models.PROTECT, blank=False,
