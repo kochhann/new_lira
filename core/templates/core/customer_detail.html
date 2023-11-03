@@ -10,62 +10,671 @@
         </tr>
     </table>
 </div>
+<style>
+    th, td {
+        border-style: none;
+    }
+</style>
+<div class="tabs tabs-responsive clearfix">
 
-<div class="col-12">
-    <div class="row g-0 align-items-stretch rounded shadow">
-        <div class="col-lg-12 d-flex justify-content-center flex-column rounded-end"
-             style="padding: 20px 20px">
+    <ul class="tab-nav clearfix">
+        <li><a href="#tab-basics">Informações Básicas</a></li>
+        <li><a href="#tab-contact">Contatos</a></li>
+        <li><a href="#tab-comercial">Comercial</a></li>
+    </ul>
+
+    <div class="tab-container">
+
+        <div class="tab-content clearfix" id="tab-basics">
             <h3>{{object.name}} - {{object.id_printable}}</h3>
             <table class="table" style="table-layout:auto;">
                 <tr>
-                    <td>Razão Social: {{object.corporate_name}}
-                        <a href="www.google.com" data-bs-toggle="modal" data-bs-target="#update_corp_name">
-                            <i class="icon-line-open" style="color:#F98708;"></i></a>
+                    <td>Nome: {{object.name}}
+                        <a href="" data-bs-toggle="modal" data-bs-target="#update_name">
+                        <i class="icon-line-edit" style="color:#F98708;"></i></a>
                     </td>
                     <td>Última alteração cadastral: {{object.modification_date|date:"d/m/Y"}}</td>
-                    {% if object.observation %}
-                    <td>Observação: {{object.observation}}</td>
-                    {% endif %}
+                </tr>
+                <tr>
+                    <td>Razão Social: {{object.corporate_name}}
+                        <a href="" data-bs-toggle="modal" data-bs-target="#update_corp_name">
+                        <i class="icon-line-edit" style="color:#F98708;"></i></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Responsável:
+                        {% if object.accountable %}
+                        {{object.accountable}}
+                        {% else %}
+                        Sem responsável cadastrado
+                        {% endif %}
+                        <a href="" data-bs-toggle="modal" data-bs-target="#update_accout">
+                        <i class="icon-line-edit" style="color:#F98708;"></i></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>CPF do Responsável:
+                        {% if object.accountable_id %}
+                        {{object.acc_id_printable}}
+                        {% else %}
+                        Sem responsável cadastrado
+                        {% endif %}
+                        <a href="" data-bs-toggle="modal" data-bs-target="#update_acc_id">
+                        <i class="icon-line-edit" style="color:#F98708;"></i></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Insc. Estadual:
+                        {% if object.state_subscription %}
+                        {{object.state_subscription}}
+                        {% else %}
+                        Sem inscrição cadastrada
+                        {% endif %}
+                        <a href="" data-bs-toggle="modal" data-bs-target="#update_st_subscription">
+                        <i class="icon-line-edit" style="color:#F98708;"></i></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Insc. Municipal:
+                        {% if object.city_subscription %}
+                        {{object.city_subscription}}
+                        {% else %}
+                        Sem inscrição cadastrada
+                        {% endif %}
+                        <a href="" data-bs-toggle="modal" data-bs-target="#update_cy_subscription">
+                        <i class="icon-line-edit" style="color:#F98708;"></i></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Página da web:
+                        {% if object.site %}
+                        {{object.site}}
+                        {% else %}
+                        Sem página cadastrada
+                        {% endif %}
+                        <a href="" data-bs-toggle="modal" data-bs-target="#update_site">
+                        <i class="icon-line-edit" style="color:#F98708;"></i></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Observação:
+                        {% if object.observation %}
+                        {{object.observation}}
+                        {% else %}
+                        Não há observações
+                        {% endif %}
+                        <a href="" data-bs-toggle="modal" data-bs-target="#update_observation">
+                        <i class="icon-line-edit" style="color:#F98708;"></i></a>
+                    </td>
                 </tr>
             </table>
-            <div class="slider-features d-none d-sm-block my-3">
-                <ul class="list-unstyled">
-                    <li class="d-inline-block me-4">
-                        <img src="{% static 'application/icons/calendar.png' %}" alt="Timer" width="30">
-                        <h5 class="mb-0">{{object.creation_date|date:"d/m/Y"}}</h5>
-                    </li>
+        </div>
 
-                    <li class="d-inline-block me-4">
-                        <img src="{% static 'application/icons/folders.png' %}" alt="ingredients" width="30">
-                        <h5 class="mb-0">{{1}}</h5>
-                    </li>
+        <div class="tab-content clearfix" id="tab-contact">
+            <div class="pricing-box pricing-extended row align-items-stretch mb-5 mx-0">
+                <div class="pricing-desc col-lg-12 p-4">
+                    <div class="pricing-title">
+                        <table style="margin-bottom: 0px;">
+                            <tr>
+                                <td><h3>Endereços</h3></td>
+                                <td>
+                                    <a href="" data-bs-toggle="modal" data-bs-target="#new_address"
+                                    data-toggle="tooltip" title="Novo endereço"><i class="icon-plus"></i></a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="pricing-features pb-0">
+                        <ul class="row">
+                            <li class="col-md-6"><i class="icon-address-card1 me-2"></i>
+                                {% for item in addresses %}
+                                <table>
+                                     <tr>
+                                        <td>
+                                            <b>{{item.name}}</b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            {{item.street}}, nº {{item.number}} {{item.further_info}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            {{item.neighborhood}}, {{item.city}} - {{item.zip_code}}
+                                        </td>
+                                    </tr>
+                                </table>
+                                {% endfor %}
+                            </li>
+                        </ul>
+                    </div>
 
-                    <li class="d-inline-block">
-                        <img src="{% static 'application/icons/treasure.png' %}" alt="kcal" width="30">
-                        <h5 class="mb-0">{{75}}</h5>
-                    </li>
-                </ul>
+                    <div class="pricing-title">
+                        <table style="margin-bottom: 0px;">
+                            <tr>
+                                <td><h3>Telefones e E-mails</h3></td>
+                                <td>
+                                    <a href="" data-bs-toggle="modal" data-bs-target="#new_phone_and_mail"
+                                    data-toggle="tooltip" title="Novo telefone ou e-mail"><i class="icon-plus"></i></a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="pricing-features pb-0">
+                        <ul class="row">
+                            <li class="col-md-6"><i class="icon-line-phone me-2"></i>
+                                {% for item in phones %}
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <b>{{item.name}}</b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            {{item.phone_printable}}
+                                        </td>
+                                    </tr>
+                                </table>
+                                {% endfor %}
+                            </li>
+                        </ul>
+                        <ul class="row">
+                            <li class="col-md-6"><i class="icon-line-mail me-2"></i>
+                                {% for item in emails %}
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <b>{{item.name}}</b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            {{item.email}}
+                                        </td>
+                                    </tr>
+                                </table>
+                                {% endfor %}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div><a href="demos/recipes/recipe-single.html" class="button button-circle button-large m-0 fw-semibold nott ls0 text-end">View Recipe <i class="icon-angle-right"></i></a></div>
+        </div>
+
+        <div class="tab-content clearfix" id="tab-comercial">
+            Comercial
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Modals -->
+
+<div class="modal fade" id="update_observation" tabindex="-1" role="dialog" aria-labelledby="update_observation" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="update_observation_label">Incluir / alterar observações</h4>
+                <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-hidden="true"></button>
+            </div>
+            <div class="modal-body">
+                <form id="change-observation" class="mb-0" action="{% url 'update_customer_observation' object.pk %}" method="post"
+                      enctype="multipart/form-data">
+                    {{ form.non_field_errors }}
+                    {{ form.errors }}
+                    {% csrf_token %}
+                    <div class="form-process"></div>
+                    <div class="row form-section px-4 py-5 bg-white rounded shadow-lg">
+                        <div class="col-12 form-group">
+                            <label for="new-obs">Observações</label>
+                            <textarea name="new-obs" id="new-obs" class="form-control form-control-lg required">{% if object.observation %}{% else %}{% endif %}</textarea>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" name="change-observation-submit"
+                                    class="btn w-100 text-white bg-color rounded-3 mt-2">Salvar
+                            </button>
+                        </div>
+
+                        <input type="hidden" name="prefix" value="landing-enquiry-">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+
         </div>
     </div>
 </div>
-<!-- Modal -->
+
+<div class="modal fade" id="update_site" tabindex="-1" role="dialog" aria-labelledby="update_site" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="update_site_label">Alterar página web</h4>
+                <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-hidden="true"></button>
+            </div>
+            <div class="modal-body">
+                <form id="change-site" class="mb-0" action="{% url 'update_customer_site' object.pk %}" method="post"
+                      enctype="multipart/form-data">
+                    {{ form.non_field_errors }}
+                    {{ form.errors }}
+                    {% csrf_token %}
+                    <div class="form-process"></div>
+                    <div class="row form-section px-4 py-5 bg-white rounded shadow-lg">
+                        <div class="col-12 form-group">
+                            <label for="new-site">Página web:</label>
+                            <input type="text" name="new-site" id="new-site"
+                                   class="form-control form-control-lg required" value="{{object.site}}">
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" name="change-site-submit"
+                                    class="btn w-100 text-white bg-color rounded-3 mt-2">Salvar
+                            </button>
+                        </div>
+
+                        <input type="hidden" name="prefix" value="landing-enquiry-">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="update_cy_subscription" tabindex="-1" role="dialog" aria-labelledby="update_cy_subscription" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="update_cy_subscription_label">Alterar I. M.</h4>
+                <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-hidden="true"></button>
+            </div>
+            <div class="modal-body">
+                <form id="change-cy-subscription" class="mb-0" action="{% url 'update_customer_cy_subscription' object.pk %}" method="post"
+                      enctype="multipart/form-data">
+                    {{ form.non_field_errors }}
+                    {{ form.errors }}
+                    {% csrf_token %}
+                    <div class="form-process"></div>
+                    <div class="row form-section px-4 py-5 bg-white rounded shadow-lg">
+                        <div class="col-12 form-group">
+                            <label for="new-cy-subscription">Insc. Municipal:</label>
+                            <input type="text" name="new-cy-subscription" id="new-cy-subscription"
+                                   class="form-control form-control-lg required" value="{{object.city_subscription}}">
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" name="change-cy-subscription-submit"
+                                    class="btn w-100 text-white bg-color rounded-3 mt-2">Salvar
+                            </button>
+                        </div>
+
+                        <input type="hidden" name="prefix" value="landing-enquiry-">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="update_st_subscription" tabindex="-1" role="dialog" aria-labelledby="update_st_subscription" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="update_st_subscription_label">Alterar I. E.</h4>
+                <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-hidden="true"></button>
+            </div>
+            <div class="modal-body">
+                <form id="change-st-subscription" class="mb-0" action="{% url 'update_customer_st_subscription' object.pk %}" method="post"
+                      enctype="multipart/form-data">
+                    {{ form.non_field_errors }}
+                    {{ form.errors }}
+                    {% csrf_token %}
+                    <div class="form-process"></div>
+                    <div class="row form-section px-4 py-5 bg-white rounded shadow-lg">
+                        <div class="col-12 form-group">
+                            <label for="new-st-subscription">Insc. Estadual:</label>
+                            <input type="text" name="new-st-subscription" id="new-st-subscription"
+                                   class="form-control form-control-lg required" value="{{object.state_subscription}}">
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" name="change-st-subscription-submit"
+                                    class="btn w-100 text-white bg-color rounded-3 mt-2">Salvar
+                            </button>
+                        </div>
+
+                        <input type="hidden" name="prefix" value="landing-enquiry-">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="update_name" tabindex="-1" role="dialog" aria-labelledby="update_name" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="update_name_label">Alterar Nome</h4>
+                <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-hidden="true"></button>
+            </div>
+            <div class="modal-body">
+                <form id="change-name" class="mb-0" action="{% url 'update_customer_name' object.pk %}" method="post"
+                      enctype="multipart/form-data">
+                    {{ form.non_field_errors }}
+                    {{ form.errors }}
+                    {% csrf_token %}
+                    <div class="form-process"></div>
+                    <div class="row form-section px-4 py-5 bg-white rounded shadow-lg">
+                        <div class="col-12 form-group">
+                            <label for="new-name">Nome de apresentação:</label>
+                            <input type="text" name="new-name" id="new-name"
+                                   class="form-control form-control-lg required" value="{{object.name}}">
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" name="change-name-submit"
+                                    class="btn w-100 text-white bg-color rounded-3 mt-2">Salvar
+                            </button>
+                        </div>
+
+                        <input type="hidden" name="prefix" value="landing-enquiry-">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="update_acc_id" tabindex="-1" role="dialog" aria-labelledby="update_acc_id" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="update_acc_id_label">Alterar CPF do Responsável</h4>
+                <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-hidden="true"></button>
+            </div>
+            <div class="modal-body">
+                <form id="change-cust-acc-id" class="mb-0" action="{% url 'update_customer_acc_id' object.pk %}" method="post"
+                      enctype="multipart/form-data">
+                    {{ form.non_field_errors }}
+                    {{ form.errors }}
+                    {% csrf_token %}
+                    <div class="form-process"></div>
+                    <div class="row form-section px-4 py-5 bg-white rounded shadow-lg">
+                        <div class="col-12 form-group">
+                            <label for="new-acc-id">CPF:</label>
+                            <input type="text" name="new-acc-id" id="new-acc-id"
+                                   class="form-control cpfcnpj form-control-lg required" value="{{object.accountable_id}}">
+                            <p class="fst-italic text-dark" style="opacity: .5" >
+                                <small>
+                                    <i class="icon-line-circle-cross me-1"></i>
+                                    Utilize apenas números!
+                                </small>
+                            </p>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" name="change-acc-id-submit"
+                                    class="btn w-100 text-white bg-color rounded-3 mt-2">Salvar
+                            </button>
+                        </div>
+
+                        <input type="hidden" name="prefix" value="landing-enquiry-">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="update_accout" tabindex="-1" role="dialog" aria-labelledby="update_accout" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="update_accout_label">Alterar Responsável</h4>
+                <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-hidden="true"></button>
+            </div>
+            <div class="modal-body">
+                <form id="change-cust-account" class="mb-0" action="{% url 'update_customer_accountable' object.pk %}" method="post"
+                      enctype="multipart/form-data">
+                    {{ form.non_field_errors }}
+                    {{ form.errors }}
+                    {% csrf_token %}
+                    <div class="form-process"></div>
+                    <div class="row form-section px-4 py-5 bg-white rounded shadow-lg">
+                        <div class="col-12 form-group">
+                            <label for="new-accountable">Name:</label>
+                            <input type="text" name="new-accountable" id="new-accountable"
+                                   class="form-control form-control-lg required" value="{{object.accountable}}">
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" name="change-accoutable-submit"
+                                    class="btn w-100 text-white bg-color rounded-3 mt-2">Salvar
+                            </button>
+                        </div>
+
+                        <input type="hidden" name="prefix" value="landing-enquiry-">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="update_corp_name" tabindex="-1" role="dialog" aria-labelledby="update_corp_name_label" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="update_corp_name_label">Alterar nome do cliente</h4>
+                <h4 class="modal-title" id="update_corp_name_label">Alterar razão social do cliente</h4>
                 <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-hidden="true"></button>
             </div>
             <div class="modal-body">
-                <label for="new_corporate_name">Novo nome</label>
-                <input type="text" name="new_corporate_name" id="corporate_name"
-                       class="form-control required" value="{{object.corporate_name}}">
+                <form id="change-corp-name" class="mb-0" action="{% url 'update_customer_corp_name' object.pk %}" method="post"
+                      enctype="multipart/form-data">
+                    {{ form.non_field_errors }}
+                    {{ form.errors }}
+                    {% csrf_token %}
+                    <div class="form-process"></div>
+                    <div class="row form-section px-4 py-5 bg-white rounded shadow-lg">
+                        <div class="col-12 form-group">
+                            <label for="corp-new-name">Name:</label>
+                            <input type="text" name="corp-new-name" id="corp-new-name"
+                                   class="form-control form-control-lg required" value="{{object.corporate_name}}">
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" name="change-corp-name-submit"
+                                    class="btn w-100 text-white bg-color rounded-3 mt-2">Salvar
+                            </button>
+                        </div>
+
+                        <input type="hidden" name="prefix" value="landing-enquiry-">
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary">Salvar</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="new_address" tabindex="-1" role="dialog" aria-labelledby="new_address" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="new_address_label">Novo Endereço</h4>
+                <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-hidden="true"></button>
+            </div>
+            <div class="modal-body">
+                <form id="customer-address-form" class="row" action="#" method="post" enctype="multipart/form-data">
+                    {{ form.non_field_errors }}
+                    {% if form.errors %}
+                    <div class="style-msg errormsg">
+                        <div class="sb-msg"  style="padding-bottom:0;">
+                            {{ form.comp_id.errors }}
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% csrf_token %}
+                    <div class="form-process">
+                        <div class="css3-spinner">
+                            <div class="css3-spinner-scaler"></div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <div class="row">
+                                    <input type="hidden" name="company" value="{{company}}">
+                                    <input type="hidden" name="type_of" value="1">
+                                    <input type="hidden" name="customer" value="{{customer.pk}}">
+                                    <div class="col-12 form-group">
+                                        <label for="name">Nome<small class="text-danger">*</small></label>
+                                        <input type="text" name="name" id="name" class="form-control" value="" required>
+                                    </div>
+                                    <div class="col-6 form-group">
+                                        <label for="estado">Estado</label>
+                                        <select name="estado" class="form-select" id="estado_ddl" onchange="filtra_cidade_oncreate()">
+                                            <option value="" selected>-- Estado --</option>
+                                            {% for item in states %}
+                                            <option value="{{item.pk}}">{{item}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-6 form-group">
+                                        <label for="cidade">Cidade</label>
+                                        <select name="cidade" class="form-select" id="cidade_ddl">
+                                            <option value="" selected>-- Cidade --</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <label for="street">Rua</label>
+                                        <input type="text" name="street" id="street_id" class="form-control"
+                                               value="" placeholder="">
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label for="number">Número</label>
+                                        <input type="text" name="number" id="number_id" class="form-control"
+                                               value="" placeholder="">
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label for="further_info">Complemento</label>
+                                        <input type="text" name="further_info" id="further_info_id" class="form-control"
+                                               value="" placeholder="">
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label for="neighborhood">Bairro</label>
+                                        <input type="text" name="neighborhood" id="neighborhood_id" class="form-control"
+                                               value="" placeholder="">
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label for="zip_code">CEP</label>
+                                        <input type="text" name="zip_code" id="zip_code_id" class="form-control zipcode"
+                                               value="" placeholder="Utilize apenas números">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <button type="submit" name="customer-contact-submit" style="margin: 15px;"
+                                class="button button-small button-circle button-border">Salvar</button>
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="new_phone_and_mail" tabindex="-1" role="dialog" aria-labelledby="new_phone_and_mail" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="new_phone_and_mail_label">Novo Telefone ou E-mail</h4>
+                <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-hidden="true"></button>
+            </div>
+            <div class="modal-body">
+                <form id="customer-phone-form" class="row" action="#" method="post" enctype="multipart/form-data">
+                    {{ form.non_field_errors }}
+                    {% if form.errors %}
+                    <div class="style-msg errormsg">
+                        <div class="sb-msg"  style="padding-bottom:0;">
+                            {{ form.comp_id.errors }}
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% csrf_token %}
+                    <div class="form-process">
+                        <div class="css3-spinner">
+                            <div class="css3-spinner-scaler"></div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <div class="row">
+                                    <input type="hidden" name="company" value="{{company}}">
+                                    <input type="hidden" name="type_of" value="1">
+                                    <input type="hidden" name="customer" value="{{customer.pk}}">
+                                    <div class="col-12 form-group">
+                                        <label for="name">Nome<small class="text-danger">*</small></label>
+                                        <input type="text" name="name" id="name" class="form-control" value="" required>
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label for="phone">Telefone</label>
+                                        <input type="text" name="phone" id="cust-phone" class="form-control phone"
+                                               value="" placeholder="Utilize apenas números">
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label for="email">E-mail</label>
+                                        <input type="text" name="email" id="email_id" class="form-control"
+                                               value="" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <button type="submit" name="customer-contact-submit" style="margin: 15px;"
+                                class="button button-small button-circle button-border">Salvar</button>
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
             </div>
 
         </div>

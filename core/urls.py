@@ -2,21 +2,7 @@ from django.urls import path
 from django.contrib.auth.views import (
     LogoutView
 )
-from .views import (
-    load_cidades,
-    IndexView,
-    LoginView,
-    DashboardView,
-    OpUserCreate,
-    OpUserList,
-    ResetPasswordView,
-    ResetPasswordConfirmView,
-    ResetPasswordCompleteView,
-    CustomerList,
-    CustomerCreate,
-    CustomerView,
-    CustomerUpdate
-)
+from .views import *
 
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
@@ -31,7 +17,15 @@ urlpatterns = [
     path('customer/list/', CustomerList.as_view(), name='list_customer'),
     path('customer/create/', CustomerCreate.as_view(), name='create_customer'),
     path('customer/create/load-cidades', load_cidades, name='load_cidades'),
-    path('customer/update/<int:pk>/load-cidades', load_cidades, name='load_cidades'),
+    path('customer/detail/<int:pk>/load-cidades-oncreate', load_cidades_oncreate, name='load_cidades_oncreate'),
     path('customer/detail/<int:pk>/', CustomerView.as_view(), name='view_customer'),
-    path('customer/update/<int:pk>/', CustomerUpdate.as_view(), name='update_customer')
+    path('customer/update-accoutable/<int:pk>/', UpdateCustAccountable.as_view(), name='update_customer_accountable'),
+    path('customer/update-acc-id/<int:pk>/', UpdateCustAccID.as_view(), name='update_customer_acc_id'),
+    path('customer/update-name/<int:pk>/', UpdateCustName.as_view(), name='update_customer_name'),
+    path('customer/update-corp-name/<int:pk>/', UpdateCustCorpName.as_view(), name='update_customer_corp_name'),
+    path('customer/update-st-subscription/<int:pk>/', UpdateCustStSubscription.as_view(), name='update_customer_st_subscription'),
+    path('customer/update-cy-subscription/<int:pk>/', UpdateCustCySubscription.as_view(), name='update_customer_cy_subscription'),
+    path('customer/update-site/<int:pk>/', UpdateCustSite.as_view(), name='update_customer_site'),
+    path('customer/update-observation/<int:pk>/', UpdateCustObservation.as_view(), name='update_customer_observation'),
+    path('customer/contact/create/<int:pk>/', ContactCreate.as_view(), name='customer_contact_create')
 ]

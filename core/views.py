@@ -4,9 +4,9 @@ from django.utils.decorators import method_decorator
 from django.db import transaction
 from django.shortcuts import render
 from django.contrib import messages
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.core import serializers
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth import authenticate
 from django.contrib.auth import get_user_model
@@ -42,11 +42,20 @@ from .models import (
 )
 from .forms import (
     OpUserForm,
-    CustomerForm
+    CustomerForm,
+    ContactForm
 )
 
 
 def load_cidades(request):
+    depart = request.GET['outro_param']
+    estado = State.objects.get(pk=depart)
+
+    qs_json = serializers.serialize('json', estado.city_set.all())
+    return HttpResponse(qs_json, content_type='application/json')
+
+
+def load_cidades_oncreate(request, pk):
     depart = request.GET['outro_param']
     estado = State.objects.get(pk=depart)
 
@@ -275,25 +284,92 @@ class CustomerCreate(CreateView):
 
 
 @method_decorator(login_required, name='dispatch')
-class CustomerUpdate(UpdateView):
-    model = Customer
-    form_class = CustomerForm
-    template_name = 'core/customer_form.html'
+class UpdateCustAccountable(View):
+    def post(self, *args, **kwargs):
+        customer = Customer.objects.get(id=self.kwargs['pk'])
+        new_name = self.request.POST.get('new-accountable', None)
+        customer.accountable = new_name
+        customer.save()
+        messages.success(self.request, 'Nome do responsável alterado com sucesso')
+        return HttpResponseRedirect(reverse("view_customer", args=[customer.pk]))
 
-    def get_context_data(self, **kwargs):
-        context = super(CustomerUpdate, self).get_context_data(**kwargs)
-        states = State.objects.all()
-        us = self.request.user
-        op = OpUser.objects.get(user=us.pk)
-        comp = op.company.pk
-        context['company'] = comp
-        context['states'] = states
-        context['doc_title'] = 'Gestão de clientes'
-        context['top_app_name'] = 'Clientes'
-        context['pt_h1'] = 'Gestão de clientes'
-        context['pt_span'] = ''
-        context['pt_breadcrumb2'] = 'Clientes'
-        return context
+
+@method_decorator(login_required, name='dispatch')
+class UpdateCustAccID(View):
+    def post(self, *args, **kwargs):
+        customer = Customer.objects.get(id=self.kwargs['pk'])
+        new_name = self.request.POST.get('new-acc-id', None)
+        id = re.findall("\d+", new_name)
+        customer.accountable_id = ''.join(id)
+        customer.save()
+        messages.success(self.request, 'CPF do responsável alterado com sucesso')
+        return HttpResponseRedirect(reverse("view_customer", args=[customer.pk]))
+
+
+@method_decorator(login_required, name='dispatch')
+class UpdateCustName(View):
+    def post(self, *args, **kwargs):
+        customer = Customer.objects.get(id=self.kwargs['pk'])
+        new_name = self.request.POST.get('new-name', None)
+        customer.name = new_name
+        customer.save()
+        messages.success(self.request, 'Nome alterado com sucesso')
+        return HttpResponseRedirect(reverse("view_customer", args=[customer.pk]))
+
+
+@method_decorator(login_required, name='dispatch')
+class UpdateCustCorpName(View):
+    def post(self, *args, **kwargs):
+        customer = Customer.objects.get(id=self.kwargs['pk'])
+        new_name = self.request.POST.get('corp-new-name', None)
+        customer.corporate_name = new_name
+        customer.save()
+        messages.success(self.request, 'Razão social alterada com sucesso')
+        return HttpResponseRedirect(reverse("view_customer", args=[customer.pk]))
+
+
+@method_decorator(login_required, name='dispatch')
+class UpdateCustStSubscription(View):
+    def post(self, *args, **kwargs):
+        customer = Customer.objects.get(id=self.kwargs['pk'])
+        new_name = self.request.POST.get('new-st-subscription', None)
+        customer.state_subscription = new_name
+        customer.save()
+        messages.success(self.request, 'Inscrição estadual alterada com sucesso')
+        return HttpResponseRedirect(reverse("view_customer", args=[customer.pk]))
+
+
+@method_decorator(login_required, name='dispatch')
+class UpdateCustCySubscription(View):
+    def post(self, *args, **kwargs):
+        customer = Customer.objects.get(id=self.kwargs['pk'])
+        new_name = self.request.POST.get('new-cy-subscription', None)
+        customer.city_subscription = new_name
+        customer.save()
+        messages.success(self.request, 'Inscrição municipal alterada com sucesso')
+        return HttpResponseRedirect(reverse("view_customer", args=[customer.pk]))
+
+
+@method_decorator(login_required, name='dispatch')
+class UpdateCustSite(View):
+    def post(self, *args, **kwargs):
+        customer = Customer.objects.get(id=self.kwargs['pk'])
+        new_name = self.request.POST.get('new-site', None)
+        customer.site = new_name
+        customer.save()
+        messages.success(self.request, 'Página web alterada com sucesso')
+        return HttpResponseRedirect(reverse("view_customer", args=[customer.pk]))
+
+
+@method_decorator(login_required, name='dispatch')
+class UpdateCustObservation(View):
+    def post(self, *args, **kwargs):
+        customer = Customer.objects.get(id=self.kwargs['pk'])
+        new_name = self.request.POST.get('new-obs', None)
+        customer.observation = new_name
+        customer.save()
+        messages.success(self.request, 'Observações alteradas com sucesso')
+        return HttpResponseRedirect(reverse("view_customer", args=[customer.pk]))
 
 
 @method_decorator(login_required, name='dispatch')
@@ -305,16 +381,36 @@ class CustomerView(DetailView):
         us = self.request.user
         op = OpUser.objects.get(user=us.pk)
         comp = op.company.pk
+        states = State.objects.all()
+        addresses = self.object.address_set.all()
+        phones = self.object.telephone_set.all()
+        emails = self.object.email_set.all()
+
         # contratos = self.object.contract_set.all()
         # notas = self.object.billing_set.all()
         context['doc_title'] = 'Gestão de clientes'
         context['top_app_name'] = 'Clientes'
         context['pt_h1'] = 'Gestão de clientes'
         context['pt_breadcrumb2'] = 'Clientes'
+        context['addresses'] = addresses
+        context['phones'] = phones
+        context['emails'] = emails
+        context['company'] = comp
+        context['states'] = states
         # context['contratos'] = contratos
         # context['notas'] = notas
         return context
 
+
+@method_decorator(login_required, name='dispatch')
+class ContactCreate(View):
+    def post(self, *args, **kwargs):
+        customer = Customer.objects.get(id=self.kwargs['pk'])
+        new_name = self.request.POST.get('new-obs', None)
+        customer.observation = new_name
+        customer.save()
+        messages.success(self.request, 'Observações alteradas com sucesso')
+        return HttpResponseRedirect(reverse("view_customer", args=[customer.pk]))
 
 class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
     template_name = 'password_reset.html'

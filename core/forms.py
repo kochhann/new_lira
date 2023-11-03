@@ -5,7 +5,8 @@ from .models import (
     OpUser,
     Customer,
     State,
-    City
+    City,
+    Address
 )
 
 
@@ -16,6 +17,20 @@ class OpUserForm(forms.ModelForm):
     class Meta:
         model = OpUser
         exclude = '__all__'
+
+
+class ContactForm(forms.ModelForm):
+    company = forms.IntegerField(required=False)
+    estado = forms.ModelMultipleChoiceField(queryset=State.objects.all())
+    cidade = forms.ModelMultipleChoiceField(queryset=City.objects.all())
+    street = forms.CharField(label='Rua')
+    number = forms.CharField(label='Número')
+    further_info = forms.CharField(label='Complemento', required=False)
+    neighborhood = forms.CharField(label='Bairro')
+    zip_code = forms.CharField(label='CEP')
+    phone = forms.CharField(label='Telefone')
+    email = forms.CharField(label='E-mail')
+
 
 
 class CustomerForm(forms.ModelForm):

@@ -1,4 +1,5 @@
 import re
+import phonenumbers
 from django.db import models
 from django.utils import timezone
 from django.urls import reverse
@@ -33,11 +34,6 @@ class Company(Base):
         self.active = False
         self.deactivation_date = timezone.now()
         self.save()
-
-    def update_corporate_name(self, new_string):
-        self.corporate_name = new_string
-        self.save()
-
 
     @property
     def id_printable(self):
@@ -183,6 +179,11 @@ class Telephone(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def phone_printable(self):
+        return phonenumbers.format_number(phonenumbers.parse(f'{self.code}{self.number}','BR'),
+                                          phonenumbers.PhoneNumberFormat.NATIONAL)
+
     class Meta:
         verbose_name = 'Telefone'
         verbose_name_plural = 'Telefones'
@@ -208,7 +209,7 @@ class City(models.Model):
     area = models.DecimalField('Área', max_digits=12, decimal_places=3)
 
     def __str__(self):
-        return f'{self.name}({self.state.acronym})'
+        return f'{self.name} / {self.state.acronym}'
 
 
 class Address(models.Model):
