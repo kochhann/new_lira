@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="heading-block fancy-title nobottomborder">
+    <table class="table">
+        <tr>
+            <td width="90%"><h4 style="padding-top: 10px;">Nova marca</h4></td>
+            <td align="right"><a href="{% url 'create_equipament_type' %}"
+								 class="button button-small button-circle button-border button-red">Cancelar</a></td>
+        </tr>
+    </table>
+</div>
+
+<div class="tabs tabs-responsive clearfix">
+
+    <ul class="tab-nav clearfix">
+        <li><a href="#tab-new-brand">Cadastro</a></li>
+        <li><a href="#tab-brands-list">Marcas existentes</a></li>
+    </ul>
+
+    <div class="tab-container">
+
+        <div class="tab-content clearfix" id="tab-new-brand">
+            <form id="brand-form" class="row" action="{% url 'create_equipament_brand' %}" method="post" enctype="multipart/form-data">
+				{{ form.non_field_errors }}
+				{% if form.errors %}
+				<div class="style-msg errormsg">
+					<div class="sb-msg"  style="padding-bottom:0;">
+						{{ form.brand.errors }}
+					</div>
+				</div>
+				{% endif %}
+				{% csrf_token %}
+				<div class="form-process">
+					<div class="css3-spinner">
+						<div class="css3-spinner-scaler"></div>
+					</div>
+				</div>
+				<div class="col-12">
+					<div class="card bg-light">
+						<div class="card-body">
+							<div class="row">
+								<div class="col-12 form-group">
+									<label for="name">Nome<small class="text-danger">*</small></label>
+									<input type="text" name="name" id="name"
+										   class="form-control" value="" required>
+								</div>
+								<div class="col-12 form-group">
+									<a href="#" data-bs-toggle="modal" data-bs-target="#brands_list"
+									 class="button button-small button-circle button-border button-blue">Ver marcas</a>
+									<button type="submit" name="eq_brand-submit" style="float: right;"
+											class="button button-small button-circle button-border">Salvar</button>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+        </div>
+
+		<div class="tab-content clearfix" id="tab-brands-list">
+            <div class="postcontent col-lg-12">
+
+				<div class="row">
+					<div class="col-12">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Marca</th>
+									<th>Quantidade</th>
+									<th>Excluir</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for item in brands %}
+								<tr>
+									<td>{{item.name}}</td>
+									<td>{{item.equipamenttype_set.all.count}}</td>
+									<td>
+										<a href="{% url 'delete_equipament_brand' item.pk %}">
+											<i class="icon-line-trash"></i>
+										</a>
+									</td>
+								</tr>
+								{% empty %}
+								<tr>
+									<td colspan="4">
+										<i class="icon-exclamation-sign"></i>Nenhuma marca
+									</td>
+								</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+        </div>
+
+    </div>
+
+</div>
+
+<!--Modals -->
+<div class="modal fade" id="brands_list" tabindex="-1" role="dialog" aria-labelledby="brands_list" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="brands_list_label">Marcas cadastradas</h4>
+                <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-hidden="true"></button>
+            </div>
+            <div class="modal-body">
+				<div class="postcontent col-lg-12">
+
+					<div class="row">
+						<div class="col-12">
+							<ul class="iconlist">
+								{% for item in brands %}
+								<li><i class="icon-line-ribbon"></i>{{item.name}}</li>
+								{% empty %}
+								<li><i class="icon-exclamation-sign"></i>Nenhuma marca</li>
+								{% endfor %}
+							</ul>
+						</div>
+					</div>
+				</div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

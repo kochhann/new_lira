@@ -1,5 +1,6 @@
 /*! jRespond.js v 0.10 | Author: Jeremy Fields [jeremy.fields@viget.com], 2013 | License: MIT */
 
+
 function countChar(val) {
     var len = val.value.length;
     if (len >= 1000) {

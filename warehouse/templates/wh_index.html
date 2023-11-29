@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<!-- Page Title
+============================================= -->
+<section id="page-title" class="page-title-center" style="">
+
+	<div class="container clearfix">
+
+		<img src="https://kochhann.sirv.com/lirasoft/assets/logo_lira_sem_fundo.svg" alt="" width="5%" height="5%" style="padding: 0px;">
+
+		<h1>{{ pt_h1 }}</h1>
+		<span>{{ pt_span }}</span>
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+			<li class="breadcrumb-item active" aria-current="page">{{ pt_breadcrumb2 }}</li>
+		</ol>
+		<div class="row col-mb-50" style="padding: 100px;">
+
+			<div class="col-sm-6 col-lg-3 text-center">
+				<i class="i-plain i-xlarge mx-auto mb-0 icon-diamond"></i>
+				<div class="counter counter-large"><span data-from="100" data-to="{{equipaments}}" data-refresh-interval="50" data-speed="2000"></span></div>
+				<h5>Equipamentos</h5>
+			</div>
+
+			<div class="col-sm-6 col-lg-3 text-center">
+				<a href="{% url 'list_accessory' 0 %}"><i class="i-plain i-xlarge mx-auto mb-0 icon-car-battery"></i></a>
+				<div class="counter counter-large"><span data-from="100" data-to="{{accessories}}" data-refresh-interval="50" data-speed="2000"></span></div>
+				<h5>Acessórios</h5>
+			</div>
+
+			<div class="col-sm-6 col-lg-3 text-center">
+				<i class="i-plain i-xlarge mx-auto mb-0 icon-line2-shield"></i>
+				<div class="counter counter-large"><span data-from="100" data-to="{{unavailable}}" data-refresh-interval="50" data-speed="2000"></span></div>
+				<h5>Equip. em locação</h5>
+			</div>
+
+			<div class="col-sm-6 col-lg-3 text-center">
+				<i class="i-plain i-xlarge mx-auto mb-0 icon-line-shield"></i>
+				<div class="counter counter-large"><span data-from="100" data-to="{{available}}" data-refresh-interval="50" data-speed="2000"></span></div>
+				<h5>Equip. disponíveis</h5>
+			</div>
+
+		</div>
+	</div>
+
+</section><!-- #page-title end -->
+
+
+
+{% endblock %}

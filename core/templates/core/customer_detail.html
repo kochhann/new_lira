@@ -227,24 +227,30 @@
                     {{ form.non_field_errors }}
                     {{ form.errors }}
                     {% csrf_token %}
-                    <div class="form-process"></div>
-                    <div class="row form-section px-4 py-5 bg-white rounded shadow-lg">
-                        <div class="col-12 form-group">
-                            <label for="new-obs">Observações</label>
-                            <textarea name="new-obs" id="new-obs" class="form-control form-control-lg required">{% if object.observation %}{% else %}{% endif %}</textarea>
+                    <div class="form-process">
+                        <div class="css3-spinner">
+                            <div class="css3-spinner-scaler"></div>
                         </div>
-                        <div class="col-12">
-                            <button type="submit" name="change-observation-submit"
-                                    class="btn w-100 text-white bg-color rounded-3 mt-2">Salvar
-                            </button>
+                    </div>
+                    <div class="col-12">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12 form-group">
+                                        <label for="new-obs">Observações</label>
+                                        <textarea class="form-control form-control-lg" required
+                                                  name="new-obs" id="new-obs"
+                                                  >{% if object.observation %}{% else %}{% endif %}</textarea>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
-                        <input type="hidden" name="prefix" value="landing-enquiry-">
+                    </div>
+                    <div class="col-6">
+                        <button type="submit" name="change-observation-submit" style="margin: 15px;"
+                                class="button button-small button-circle button-border">Salvar</button>
                     </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
             </div>
 
         </div>
@@ -264,25 +270,30 @@
                     {{ form.non_field_errors }}
                     {{ form.errors }}
                     {% csrf_token %}
-                    <div class="form-process"></div>
-                    <div class="row form-section px-4 py-5 bg-white rounded shadow-lg">
-                        <div class="col-12 form-group">
-                            <label for="new-site">Página web:</label>
-                            <input type="text" name="new-site" id="new-site"
-                                   class="form-control form-control-lg required" value="{{object.site}}">
+                    <div class="form-process">
+                        <div class="css3-spinner">
+                            <div class="css3-spinner-scaler"></div>
                         </div>
-                        <div class="col-12">
-                            <button type="submit" name="change-site-submit"
-                                    class="btn w-100 text-white bg-color rounded-3 mt-2">Salvar
-                            </button>
+                    </div>
+                    <div class="col-12">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12 form-group">
+                                        <label for="new-site">Página web:</label>
+                                        <input type="text" name="new-site" id="new-site"
+                                               class="form-control form-control-lg" required
+                                               value="{{object.site}}">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
-                        <input type="hidden" name="prefix" value="landing-enquiry-">
+                    </div>
+                    <div class="col-6">
+                        <button type="submit" name="change-site-submit" style="margin: 15px;"
+                                class="button button-small button-circle button-border">Salvar</button>
                     </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
             </div>
 
         </div>
@@ -302,25 +313,31 @@
                     {{ form.non_field_errors }}
                     {{ form.errors }}
                     {% csrf_token %}
-                    <div class="form-process"></div>
-                    <div class="row form-section px-4 py-5 bg-white rounded shadow-lg">
-                        <div class="col-12 form-group">
-                            <label for="new-cy-subscription">Insc. Municipal:</label>
-                            <input type="text" name="new-cy-subscription" id="new-cy-subscription"
-                                   class="form-control form-control-lg required" value="{{object.city_subscription}}">
+                    <div class="form-process">
+                        <div class="css3-spinner">
+                            <div class="css3-spinner-scaler"></div>
                         </div>
-                        <div class="col-12">
-                            <button type="submit" name="change-cy-subscription-submit"
-                                    class="btn w-100 text-white bg-color rounded-3 mt-2">Salvar
-                            </button>
-                        </div>
-
-                        <input type="hidden" name="prefix" value="landing-enquiry-">
                     </div>
+                    <div class="col-12">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12 form-group">
+                                        <label for="new-cy-subscription">Insc. Municipal:</label>
+                                        <input type="text" name="new-cy-subscription" id="new-cy-subscription"
+                                               class="form-control form-control-lg" required
+                                               value="{{object.city_subscription}}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <button type="submit" name="change-cy-subscription-submit" style="margin: 15px;"
+                                class="button button-small button-circle button-border">Salvar</button>
+                    </div>
+
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
             </div>
 
         </div>
@@ -340,25 +357,30 @@
                     {{ form.non_field_errors }}
                     {{ form.errors }}
                     {% csrf_token %}
-                    <div class="form-process"></div>
-                    <div class="row form-section px-4 py-5 bg-white rounded shadow-lg">
-                        <div class="col-12 form-group">
-                            <label for="new-st-subscription">Insc. Estadual:</label>
-                            <input type="text" name="new-st-subscription" id="new-st-subscription"
-                                   class="form-control form-control-lg required" value="{{object.state_subscription}}">
+                    <div class="form-process">
+                        <div class="css3-spinner">
+                            <div class="css3-spinner-scaler"></div>
                         </div>
-                        <div class="col-12">
-                            <button type="submit" name="change-st-subscription-submit"
-                                    class="btn w-100 text-white bg-color rounded-3 mt-2">Salvar
-                            </button>
+                    </div>
+                    <div class="col-12">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12 form-group">
+                                        <label for="new-st-subscription">Insc. Estadual:</label>
+                                        <input type="text" name="new-st-subscription" id="new-st-subscription"
+                                               class="form-control form-control-lg" required
+                                               value="{{object.state_subscription}}">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
-                        <input type="hidden" name="prefix" value="landing-enquiry-">
+                    </div>
+                    <div class="col-6">
+                        <button type="submit" name="change-st-subscription-submit" style="margin: 15px;"
+                                class="button button-small button-circle button-border">Salvar</button>
                     </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
             </div>
 
         </div>
@@ -378,25 +400,30 @@
                     {{ form.non_field_errors }}
                     {{ form.errors }}
                     {% csrf_token %}
-                    <div class="form-process"></div>
-                    <div class="row form-section px-4 py-5 bg-white rounded shadow-lg">
-                        <div class="col-12 form-group">
-                            <label for="new-name">Nome de apresentação:</label>
-                            <input type="text" name="new-name" id="new-name"
-                                   class="form-control form-control-lg required" value="{{object.name}}">
+                    <div class="form-process">
+                        <div class="css3-spinner">
+                            <div class="css3-spinner-scaler"></div>
                         </div>
-                        <div class="col-12">
-                            <button type="submit" name="change-name-submit"
-                                    class="btn w-100 text-white bg-color rounded-3 mt-2">Salvar
-                            </button>
+                    </div>
+                    <div class="col-12">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12 form-group">
+                                        <label for="new-name">Nome de apresentação:</label>
+                                        <input type="text" name="new-name" id="new-name"
+                                               class="form-control form-control-lg" required
+                                               value="{{object.name}}">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
-                        <input type="hidden" name="prefix" value="landing-enquiry-">
+                    </div>
+                    <div class="col-6">
+                        <button type="submit" name="change-name-submit" style="margin: 15px;"
+                                class="button button-small button-circle button-border">Salvar</button>
                     </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
             </div>
 
         </div>
@@ -411,36 +438,42 @@
                 <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-hidden="true"></button>
             </div>
             <div class="modal-body">
-                <form id="change-cust-acc-id" class="mb-0" action="{% url 'update_customer_acc_id' object.pk %}" method="post"
+                <form id="change-acc-id" class="mb-0" action="{% url 'update_customer_acc_id' object.pk %}" method="post"
                       enctype="multipart/form-data">
                     {{ form.non_field_errors }}
                     {{ form.errors }}
                     {% csrf_token %}
-                    <div class="form-process"></div>
-                    <div class="row form-section px-4 py-5 bg-white rounded shadow-lg">
-                        <div class="col-12 form-group">
-                            <label for="new-acc-id">CPF:</label>
-                            <input type="text" name="new-acc-id" id="new-acc-id"
-                                   class="form-control cpfcnpj form-control-lg required" value="{{object.accountable_id}}">
-                            <p class="fst-italic text-dark" style="opacity: .5" >
-                                <small>
-                                    <i class="icon-line-circle-cross me-1"></i>
-                                    Utilize apenas números!
-                                </small>
-                            </p>
+                    <div class="form-process">
+                        <div class="css3-spinner">
+                            <div class="css3-spinner-scaler"></div>
                         </div>
-                        <div class="col-12">
-                            <button type="submit" name="change-acc-id-submit"
-                                    class="btn w-100 text-white bg-color rounded-3 mt-2">Salvar
-                            </button>
-                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12 form-group">
+                                        <label for="new-acc-id">CPF:</label>
+                                        <input type="text" name="new-acc-id" id="new-acc-id"
+                                               class="form-control cpfcnpj form-control-lg" required
+                                               value="{{object.accountable_id}}">
+                                        <p class="fst-italic text-dark" style="opacity: .5" >
+                                            <small>
+                                                <i class="icon-line-circle-cross me-1"></i>
+                                                Utilize apenas números!
+                                            </small>
+                                        </p>
 
-                        <input type="hidden" name="prefix" value="landing-enquiry-">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <button type="submit" name="change-acc-id-submit" style="margin: 15px;"
+                                class="button button-small button-circle button-border">Salvar</button>
                     </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
             </div>
 
         </div>
@@ -460,26 +493,33 @@
                     {{ form.non_field_errors }}
                     {{ form.errors }}
                     {% csrf_token %}
-                    <div class="form-process"></div>
-                    <div class="row form-section px-4 py-5 bg-white rounded shadow-lg">
-                        <div class="col-12 form-group">
-                            <label for="new-accountable">Name:</label>
-                            <input type="text" name="new-accountable" id="new-accountable"
-                                   class="form-control form-control-lg required" value="{{object.accountable}}">
+                    <div class="form-process">
+                        <div class="css3-spinner">
+                            <div class="css3-spinner-scaler"></div>
                         </div>
-                        <div class="col-12">
-                            <button type="submit" name="change-accoutable-submit"
-                                    class="btn w-100 text-white bg-color rounded-3 mt-2">Salvar
-                            </button>
-                        </div>
-
-                        <input type="hidden" name="prefix" value="landing-enquiry-">
                     </div>
+                    <div class="col-12">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12 form-group">
+                                        <label for="new-accountable">Name:</label>
+                                        <input type="text" name="new-accountable" id="new-accountable"
+                                               class="form-control form-control-lg" required
+                                               value="{{object.accountable}}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <button type="submit" name="cust-account-submit" style="margin: 15px;"
+                                class="button button-small button-circle button-border">Salvar</button>
+                    </div>
+
                 </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            </div>
+
 
         </div>
     </div>
@@ -498,25 +538,31 @@
                     {{ form.non_field_errors }}
                     {{ form.errors }}
                     {% csrf_token %}
-                    <div class="form-process"></div>
-                    <div class="row form-section px-4 py-5 bg-white rounded shadow-lg">
-                        <div class="col-12 form-group">
-                            <label for="corp-new-name">Name:</label>
-                            <input type="text" name="corp-new-name" id="corp-new-name"
-                                   class="form-control form-control-lg required" value="{{object.corporate_name}}">
-                        </div>
-                        <div class="col-12">
-                            <button type="submit" name="change-corp-name-submit"
-                                    class="btn w-100 text-white bg-color rounded-3 mt-2">Salvar
-                            </button>
-                        </div>
 
-                        <input type="hidden" name="prefix" value="landing-enquiry-">
+                    <div class="form-process">
+                        <div class="css3-spinner">
+                            <div class="css3-spinner-scaler"></div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12 form-group">
+                                        <label for="corp-new-name">Name:</label>
+                                        <input type="text" name="corp-new-name" id="corp-new-name"
+                                            class="form-control form-control-lg" required
+                                            value="{{object.corporate_name}}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <button type="submit" name="customer-corp-name-submit" style="margin: 15px;"
+                                class="button button-small button-circle button-border">Salvar</button>
                     </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
             </div>
 
         </div>
@@ -531,7 +577,8 @@
                 <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-hidden="true"></button>
             </div>
             <div class="modal-body">
-                <form id="customer-address-form" class="row" action="#" method="post" enctype="multipart/form-data">
+                <form id="customer-address-form" class="row" action="{% url 'customer_address_create' object.pk %}"
+                      method="post" enctype="multipart/form-data">
                     {{ form.non_field_errors }}
                     {% if form.errors %}
                     <div class="style-msg errormsg">
@@ -559,7 +606,8 @@
                                     </div>
                                     <div class="col-6 form-group">
                                         <label for="estado">Estado</label>
-                                        <select name="estado" class="form-select" id="estado_ddl" onchange="filtra_cidade_oncreate()">
+                                        <select name="estado" class="form-select" id="estado_ddl"
+                                                onchange="filtra_cidade_oncreate()" required>
                                             <option value="" selected>-- Estado --</option>
                                             {% for item in states %}
                                             <option value="{{item.pk}}">{{item}}</option>
@@ -568,19 +616,19 @@
                                     </div>
                                     <div class="col-6 form-group">
                                         <label for="cidade">Cidade</label>
-                                        <select name="cidade" class="form-select" id="cidade_ddl">
+                                        <select name="cidade" class="form-select" id="cidade_ddl" required>
                                             <option value="" selected>-- Cidade --</option>
                                         </select>
                                     </div>
                                     <div class="col-md-12 form-group">
                                         <label for="street">Rua</label>
                                         <input type="text" name="street" id="street_id" class="form-control"
-                                               value="" placeholder="">
+                                               value="" placeholder="" required>
                                     </div>
                                     <div class="col-md-6 form-group">
                                         <label for="number">Número</label>
                                         <input type="text" name="number" id="number_id" class="form-control"
-                                               value="" placeholder="">
+                                               value="" placeholder="" required>
                                     </div>
                                     <div class="col-md-6 form-group">
                                         <label for="further_info">Complemento</label>
@@ -595,22 +643,19 @@
                                     <div class="col-md-6 form-group">
                                         <label for="zip_code">CEP</label>
                                         <input type="text" name="zip_code" id="zip_code_id" class="form-control zipcode"
-                                               value="" placeholder="Utilize apenas números">
+                                               value="" placeholder="Utilize apenas números" required>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-6">
-                        <button type="submit" name="customer-contact-submit" style="margin: 15px;"
+                        <button type="submit" name="customer-address-submit" style="margin: 15px;"
                                 class="button button-small button-circle button-border">Salvar</button>
                     </div>
 
                 </form>
 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
             </div>
 
         </div>
@@ -625,15 +670,9 @@
                 <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-hidden="true"></button>
             </div>
             <div class="modal-body">
-                <form id="customer-phone-form" class="row" action="#" method="post" enctype="multipart/form-data">
+                <form id="customer-contact-form" class="row" action="{% url 'customer_contact_create' object.pk %}" method="post" enctype="multipart/form-data">
                     {{ form.non_field_errors }}
-                    {% if form.errors %}
-                    <div class="style-msg errormsg">
-                        <div class="sb-msg"  style="padding-bottom:0;">
-                            {{ form.comp_id.errors }}
-                        </div>
-                    </div>
-                    {% endif %}
+                    {{ form.errors }}
                     {% csrf_token %}
                     <div class="form-process">
                         <div class="css3-spinner">
@@ -655,11 +694,18 @@
                                         <label for="phone">Telefone</label>
                                         <input type="text" name="phone" id="cust-phone" class="form-control phone"
                                                value="" placeholder="Utilize apenas números">
+                                        <p class="fst-italic text-dark" style="opacity: .5" >
+                                            <small>
+                                                <i class="icon-line-circle-cross me-1"></i>
+                                                DDD+fone - 51998887766
+                                            </small>
+                                        </p>
                                     </div>
                                     <div class="col-md-6 form-group">
                                         <label for="email">E-mail</label>
-                                        <input type="text" name="email" id="email_id" class="form-control"
+                                        <input type="email" name="email" id="email_id" class="form-control"
                                                value="" placeholder="">
+                                        <p id="result"></p>
                                     </div>
                                 </div>
                             </div>
@@ -672,9 +718,6 @@
 
                 </form>
 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
             </div>
 
         </div>

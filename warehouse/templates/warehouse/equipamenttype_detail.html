@@ -3,19 +3,159 @@
 <div class="heading-block fancy-title nobottomborder">
     <table class="table" style="table-layout: auto;">
         <tr>
-            <td width="60%"><h4 style="padding-top: 10px;">Detales do cliente</h4></td>
-            <td align="right"><a href="{% url 'list_equipament_type' %}"
-                     class="button button-small button-circle button-border button-red">Voltar</a></td>
+            <td width="60%"><h4 style="padding-top: 10px;">Detalhes do equipamento</h4></td>
+            <td align="right">
+                <a href="#" data-bs-toggle="modal" data-bs-target="#update_equipament_type"
+                     class="button button-small button-circle button-border button-blue">Editar</a>
+                <a href="{% url 'list_equipament' object.pk 0 %}" class="button button-small button-circle button-border button-gray">Unidades</a>
+                <a href="{% url 'list_equipament_type' %}"
+                     class="button button-small button-circle button-border button-red">Voltar</a>
+            </td>
         </tr>
     </table>
 </div>
 
 <div class="col-12">
-    <div class="card bg-light">
-        <div class="card-body">
-            <div class="row">
-                <h3 style="color: #27292b;">{{object}}</h3>
+
+
+    <div class="row justify-content-between min-vh-100 align-items-center" style="min-height: 00vh !important;">
+
+        <div class="col-md-6">
+            <img src="https://kochhann.sirv.com/lirasoft/assets/map.png" alt="{{object}}" class="op-03">
+        </div>
+
+        <div class="col-md-6 mt-5 mt-md-0">
+            <h2 class="h1">{{object}}</h2>
+            <p class="text-black-50 mb-5">Atualizado em <em>{{object.modification_date}}</em></p>
+            <div class="row col-mb-30">
+<!--                Price-->
+                <div class="col-12">
+                    <div class="counter text-info">R$
+                        <span data-from="100" data-to="{{price}}" data-comma="true" data-places="0"
+                              data-refresh-interval="50" data-speed="2600"></span>
+                    </div>
+                    <h5 class="mb-2 text-black-50">Valor de compra / reembolso</h5>
+                </div>
+<!--                Unities-->
+                <div class="col-6">
+                    <div class="counter">
+                        {% if count_eqpt > 0 %}
+                        <span data-from="100" data-to="{{count_eqpt}}" data-comma="true" data-places="0"
+                              data-refresh-interval="52" data-speed="2500"></span>
+                        {% else %}
+                        <span>0</span>
+                        {% endif %}
+                    </div>
+                    <h5 class="mb-2 text-black-50">Unidades cadastradas</h5>
+                </div>
+                <div class="col-6">
+                    <div class="counter">
+                        {% if available > 0 %}
+                        <span data-from="100" data-to="{{available}}" data-comma="true" data-places="0"
+                              data-refresh-interval="52" data-speed="2500"></span>
+                        {% else %}
+                        <span>0</span>
+                        {% endif %}
+                    </div>
+                    <h5 class="mb-2 text-black-50">Disponíveis</h5>
+                </div>
+<!--                Status-->
+                <div class="col-4">
+                    <div class="counter text-success">
+                        {% if unavailable > 0 %}
+                        <span data-from="100" data-to="{{unavailable}}" data-comma="true" data-places="0"
+                              data-refresh-interval="52" data-speed="2500"></span>
+                        {% else %}
+                        <span>0</span>
+                        {% endif %}
+                    </div>
+                    <h5 class="mb-0 text-black-50">Em locação</h5>
+                </div>
+                <div class="col-4">
+                    <div class="counter text-warning">
+                        {% if maintenance > 0 %}
+                        <span data-from="100" data-to="{{maintenance}}" data-comma="true" data-places="0"
+                              data-refresh-interval="52" data-speed="2500"></span>
+                        {% else %}
+                        <span>0</span>
+                        {% endif %}
+                    </div>
+                    <h5 class="mb-0 text-black-50">Em manutenção</h5>
+                </div>
+                <div class="col-4">
+                    <div class="counter text-danger">
+                        {% if lost > 0 %}
+                        <span data-from="100" data-to="{{lost}}" data-comma="true" data-places="0"
+                              data-refresh-interval="52" data-speed="2500"></span>
+                        {% else %}
+                        <span>0</span>
+                        {% endif %}
+                    </div>
+                    <h5 class="mb-0 text-black-50">Perdido</h5>
+                </div>
             </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+<div class="modal fade" id="update_equipament_type" tabindex="-1" role="dialog" aria-labelledby="update_equipament_type" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="update_equipament_type_label">Atualizar {{object}}</h4>
+                <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-hidden="true"></button>
+            </div>
+            <div class="modal-body">
+                <form id="equipament-type-form" class="row" action="{% url 'update_equipament_type' object.pk %}"
+                      method="post" enctype="multipart/form-data">
+                    {{ form.non_field_errors }}
+                    {{ form.errors }}
+                    {% csrf_token %}
+                    <div class="form-process">
+                        <div class="css3-spinner">
+                            <div class="css3-spinner-scaler"></div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <div class="row">
+                                    <input type="hidden" name="company" value="{{company}}">
+                                    <div class="col-6 form-group">
+                                        <label for="brand">Marca<small class="text-danger">*</small></label>
+                                        <select name="brand" class="form-select" id="brand_ddl" required>
+                                            <option value="" selected>-- Marca --</option>
+                                            {% for item in brands %}
+                                            <option value="{{item.pk}}">{{item}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-6 form-group">
+                                        <label for="model">Modelo<small class="text-danger">*</small></label>
+                                        <input type="text" name="model" id="model"
+                                               class="form-control" value="{{object.model}}" required>
+                                    </div>
+                                    <div class="col-6 form-group">
+                                        <label for="price">Preço unitário<small class="text-danger">*</small></label>
+                                        <input type="text" name="price" id="price" class="form-control money"
+                                               value="{{object.price}}" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <button type="submit" name="equipament-type-submit" style="margin: 15px;"
+                                class="button button-small button-circle button-border">Salvar</button>
+                    </div>
+
+                </form>
+
+            </div>
+
         </div>
     </div>
 </div>

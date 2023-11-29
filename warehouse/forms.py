@@ -1,5 +1,7 @@
-from django import forms
 import re
+from django import forms
+from django.utils.html import format_html
+from django.urls import reverse_lazy, reverse
 from django.core.exceptions import ObjectDoesNotExist
 from .models import (
     EquipamentType,
@@ -26,9 +28,18 @@ class EquipamentTypeForm(forms.ModelForm):
             check = EquipamentType.objects.get(brand=brand, model=model, owner_comp__pk=company)
         except ObjectDoesNotExist:
             return self.cleaned_data
-
-        self._errors['brand'] = self.error_class([
-            f'Já existe um tipo cadastrado com mesma marca e modelo - {check}'])
+        if check.active:
+            self._errors['brand'] = self.error_class([
+                f'Já existe um tipo cadastrado com mesma marca e modelo - {check}'])
+        else:
+            self._errors['brand'] = self.error_class([
+                    format_html("Gostaria de reativar o modelo{}?<br>"
+                                "<a href='{}'>SIM</a><br>"
+                                "<a href='{}'>NÃO</a>",
+                                check,
+                                reverse('react_equipament_type', args=[check.pk]),
+                                reverse('list_equipament_type')
+                                )])
         # return any errors if found
         return self.cleaned_data
 

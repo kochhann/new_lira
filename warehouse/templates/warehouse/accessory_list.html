@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="modal hide" id="addBookDialog">
+ <div class="modal-header">
+    <button class="close" data-dismiss="modal">×</button>
+    <h3>Modal header</h3>
+  </div>
+    <div class="modal-body">
+        <p>some content</p>
+        <input type="text" name="bookId" id="bookId" value=""/>
+    </div>
+</div>
+
+<div class="heading-block fancy-title nobottomborder">
+    <table class="table">
+        <tr>
+            <td width="60%"><h4 style="padding-top: 10px;">Acessórios cadastrados</h4></td>
+            <td align="right">
+                <div class="btn-group">
+                    <button class="button button-small button-circle button-border button-blue"
+                            type="button" data-bs-toggle="collapse" data-bs-target="#form_accessory_add"
+                            aria-expanded="false" aria-controls="form_accessory_add">
+                        Novo
+                    </button>
+                </div>
+                <a href="{% url 'wh_index' %}"
+                 class="button button-small button-circle button-border button-red">Cancelar</a>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<section id="content">
+    <div class="content-wrap">
+        <div class="container clearfix">
+            {% if similar == 1 %}
+            <div class="collapse show" id="form_accessory_add">
+            {% else %}
+            <div class="collapse" id="form_accessory_add">
+            {% endif %}
+                <div class="col-12">
+                    <div class="card card-body">
+                        <form id="accessory-form" class="row" action="{% url 'create_accessory' %}"
+                                method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row">
+                                <input type="hidden" name="similar" value="{{similar}}">
+                                <div class="col-6 form-group">
+                                    <label for="brand">Marca<small class="text-danger">*</small></label>
+                                    <select name="brand" class="form-select" id="brand_ddl" required>
+                                        <option value="" selected>-- Marca --</option>
+                                        {% for item in brands %}
+                                        <option value="{{item.pk}}">{{item}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-6 form-group">
+                                    <label for="name">Nome<small class="text-danger">*</small></label>
+                                    <input type="text" name="name" id="name"
+                                           class="form-control" value="" required>
+                                </div>
+                                <div class="col-6 form-group">
+                                    <label for="price">Preço unitário</label>
+                                    <input type="text" name="price" id="price" class="form-control money" value="" required>
+                                </div>
+                                <div class="col-6 form-group">
+                                    <label for="quantity">Estoque atual</label>
+                                    <input type="number" name="quantity" id="quantity" class="form-control" value="0">
+                                </div>
+                                <div class="col-6 form-group" style="margin-top: 25px;">
+                                    <button type="submit" name="accessory-submit"
+                                            class="button button-small button-circle button-border">Salvar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="divider divider-center"><i class="icon-screen"></i></div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th width="30%">Nome</th>
+                            <th>Quantidade</th>
+                            <th>Preço</th>
+                            <th>Ver</th>
+                            <th>Excluir</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in accessories %}
+                        <input type="hidden" value="{{item.pk}}" id="pk_accessory">
+                        <tr>
+                            <td>{{ item }}</td>
+                            <td>
+                                <div class="row col-mb-50 mb-0" style="--col-mb: 5px;">
+                                    <div class="col-md-4">
+                                         {{ item.quantity }}
+                                    </div>
+                                    <div class="col-md-2">
+                                         <a id="hr_edit_acc_qtt" data-bs-toggle="collapse" href="#collapseExample{{item.pk}}"
+                                            aria-expanded="false" aria-controls="collapseExample{{item.pk}}" data-toggle="tooltip"
+                                            title="Adiciona / Remove">
+                                             <i class="icon-edit"></i>
+                                         </a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>{{ item.price }}</td>
+                            <td><a href="#"><i class="icon-eye"></i></a></td>
+                            <td><a href="#"><i class="icon-trash"></i></a></td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" >
+                                <div class="collapse" id="collapseExample{{item.pk}}">
+                                    <form id="acc-qtt{{item.pk}}-form" class="row" action="{% url 'acc_quantity' item.pk %}"
+                                          method="post" enctype="multipart/form-data">
+                                        {{ form.non_field_errors }}
+                                        {% csrf_token %}
+                                        <div class="form-process">
+                                            <div class="css3-spinner">
+                                                <div class="css3-spinner-scaler"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="card bg-light">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-3 form-group">
+                                                            <input type="number" name="qtt{{item.pk}}" id="qtt{{item.pk}}"
+                                                                   class="form-control" value="0" required>
+                                                        </div>
+                                                        <div class="col-4 form-group">
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" type="radio"
+                                                                       name="gridRadios{{item.pk}}" id="gridRadios1{{item.pk}}"
+                                                                       value="add" checked>
+                                                                <label class="form-check-label" for="gridRadios1{{item.pk}}">
+                                                                    Adicionar
+                                                                </label>
+                                                            </div>
+                                                            <div class="form-check  form-check-inline">
+                                                                <input class="form-check-input" type="radio"
+                                                                       name="gridRadios{{item.pk}}" id="gridRadios2{{item.pk}}"
+                                                                       value="rem">
+                                                                <label class="form-check-label" for="gridRadios2{{item.pk}}">
+                                                                    Remover
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-5 form-group">
+                                                            <button type="submit" name="acc-qtt{{item.pk}}-submit"
+                                                                    class="button button-small button-circle button-border">OK</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5"> Sem registros </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}

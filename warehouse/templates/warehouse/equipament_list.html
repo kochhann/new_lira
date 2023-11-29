@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="heading-block fancy-title nobottomborder">
+    <table class="table">
+        <tr>
+            <td width="60%"><h4 style="padding-top: 10px;">Equipamentos {{type}} cadastrados</h4></td>
+            <td align="left">
+                <div class="btn-group">
+                    <button class="button button-small button-circle button-border button-green"
+                            type="button" data-bs-toggle="collapse" data-bs-target="#form_equipament_subtt"
+                            aria-expanded="false" aria-controls="form_equipament_subtt">
+                        Legenda
+                    </button>
+                </div>
+            </td>
+            <td align="right">
+                <div class="btn-group">
+                    <button class="button button-small button-circle button-border button-blue"
+                            type="button" data-bs-toggle="collapse" data-bs-target="#form_equipament_add"
+                            aria-expanded="false" aria-controls="form_equipament_add">
+                        Novo
+                    </button>
+                </div>
+                <a href="#" onclick="history.back();"
+                 class="button button-small button-circle button-border button-red">Cancelar</a>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<section id="content">
+    <div class="content-wrap">
+        <div class="container clearfix">
+            {% if many %}
+            <div class="collapse show" id="form_equipament_add">
+            {% else %}
+            <div class="collapse" id="form_equipament_add">
+            {% endif %}
+                <div class="col-12">
+                    <div class="card card-body">
+                        <form id="one-equipament-form" class="row" action="{% url 'create_one_equipament' %}"
+                                method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input type="hidden" name="dd_form_equipament_type" value="{{type.pk}}">
+                            <div class="form-group col-12">
+                                <label for="dd_form_equipament_sn">Serial</label>
+                                <input type="text" class="form-control" id="dd_form_equipament_sn" required
+                                        name="dd_form_equipament_sn" placeholder="Digite ou escaneie o código">
+                            </div>
+                            <div class="col-6">
+                                <button type="submit" name="one-equipament-submit"
+                                        class="button button-small button-circle button-border">
+                                    Adicionar
+                                </button>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-check">
+                                    {% if many %}
+                                    <input type="checkbox" checked="true" name="check_if_many" class="form-check-input" id="check_if_many">
+                                    {% else %}
+                                    <input type="checkbox" name="check_if_many" class="form-check-input" id="check_if_many">
+                                    {% endif %}
+                                    <label class="form-check-label" for="check_if_many">Manter aberto</label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="divider divider-center"><i class="icon-screen"></i></div>
+            </div>
+            <div class="collapse col-4" id="form_equipament_subtt">
+                <div class="table-responsive">
+                    <!-- Legenda -->
+                    <table>
+                        <tr>
+                            <th>
+                                <i class="icon-line-check-square" style="padding-left: 10px;
+                                                                   color: #68974E;
+                                                                   padding-right: 20px;">
+                                    Disponível
+                                </i>
+                            </th>
+                            <th>
+                                <i class="icon-forbidden" style="padding-left: 10px;
+                                                                   color: #2F4F4F;
+                                                                   padding-right: 20px;">
+                                    Locado
+                                </i>
+                            </th>
+                            <th>
+                                <i class="icon-exclamation" style="padding-left: 10px;
+                                                                   color: #DAA520;
+                                                                   padding-right: 20px;">
+                                    Manutenção
+                                </i>
+                            </th>
+                            <th>
+                                <i class="icon-file-excel1" style="padding-left: 10px;
+                                                                   color: #FF6347;
+                                                                   padding-right: 20px;">
+                                    Perdido
+                                </i>
+                            </th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table id="datatable1" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th width="5%">Status</th>
+                            <th width="70%">Nome</th>
+                            <th>Ver</th>
+                            <th>Excluir</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in equipaments %}
+                        <tr>
+                            <td style="text-align: center; vertical-align: middle;">
+                                {% if item.status == "1" %}
+                                <i class="icon-line-check-square" style="padding-left: 10px;
+                                                                   color: #68974E;
+                                                                   padding-right: 20px;"></i>
+                                {% elif item.status == "2" %}
+                                <i class="icon-forbidden" style="padding-left: 10px;
+                                                                   color: #2F4F4F;
+                                                                   padding-right: 20px;"></i>
+                                {% elif item.status == "3" %}
+                                <i class="icon-exclamation" style="padding-left: 10px;
+                                                                   color: #DAA520;
+                                                                   padding-right: 20px;"></i>
+                                {% elif item.status == "4" %}
+                                <i class="icon-file-excel1" style="padding-left: 10px;
+                                                                   color: #FF6347;
+                                                                   padding-right: 20px;"></i>
+                                {% endif %}
+                            </td>
+                            <td>{{ item }}</td>
+                            <td><a href="#"><i class="icon-eye"></i></a></td>
+                            <td><a href="{% url 'delete_equipament' item.pk %}"><i class="icon-trash"></i></a></td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4"> Sem registros </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}

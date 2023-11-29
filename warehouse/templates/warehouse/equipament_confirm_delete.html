@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="heading-block fancy-title nobottomborder">
+    <table class="table">
+        <tr>
+            <td width="90%"><h4>Tem certeza que deseja excluir {{object}}?</h4></td>
+            <td align="right"><a href="#" onclick="history.back();"
+                                 class="button button-small button-circle button-border button-red"
+                                 disabled="disabled">Cancelar</a></td>
+        </tr>
+    </table>
+</div>
+<form method="POST">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit" name="delete-brand-submit" id="delete-brand-submit"
+            class="button button-circle button-border button-red">Confirmar</button>
+</form>
+{% endblock %}

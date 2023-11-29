@@ -30,16 +30,7 @@ from django.views.generic import (
     DetailView,
     View
 )
-from .models import (
-    OpUser,
-    Branch,
-    Customer,
-    City,
-    State,
-    Address,
-    Telephone,
-    Email
-)
+from .models import *
 from .forms import (
     OpUserForm,
     CustomerForm,
@@ -406,11 +397,76 @@ class CustomerView(DetailView):
 class ContactCreate(View):
     def post(self, *args, **kwargs):
         customer = Customer.objects.get(id=self.kwargs['pk'])
-        new_name = self.request.POST.get('new-obs', None)
-        customer.observation = new_name
-        customer.save()
-        messages.success(self.request, 'Observações alteradas com sucesso')
-        return HttpResponseRedirect(reverse("view_customer", args=[customer.pk]))
+        company = self.request.POST.get('company', None)
+        new_contact_name = self.request.POST.get('name', None)
+        new_phone = self.request.POST.get('phone', None)
+        new_mail = self.request.POST.get('email', None)
+
+        if new_mail:
+            mails = customer.email_set.all()
+            for i in mails:
+                if i.email == new_mail:
+                    messages.error(self.request, f'{new_mail} já está cadastrado')
+                else:
+                    email = Email(
+                        name=new_contact_name,
+                        owner_customer=customer,
+                        email=new_mail
+                    )
+                    email.save()
+                    messages.success(self.request, f'{new_mail} cadastrado com sucesso')
+
+        if new_phone:
+            phones = customer.telephone_set.all()
+            for i in phones:
+                l_full = re.findall("\d+", new_phone)
+                full = ''.join(l_full)
+                check_phone = str(i.code) + str(i.number)
+                if check_phone == full:
+                    print('já cadastrado')
+                    messages.error(self.request, f'{new_phone} já está cadastrado')
+                else:
+                    ddd = full[:2]
+                    phone = full[2:len(full)]
+                    new_telephone = Telephone(
+                        name=new_contact_name,
+                        owner_customer=customer,
+                        code=ddd,
+                        number=phone
+                    )
+                    new_telephone.save()
+                    messages.success(self.request, f'{new_phone} cadastrado com sucesso')
+
+        if not new_phone and not new_mail:
+            messages.info(self.request, f'Adicione um e-mail ou um telefone válido')
+        return HttpResponseRedirect(reverse('view_customer', args=[customer.pk]) + '#tab-contact')
+
+
+@method_decorator(login_required, name='dispatch')
+class AddressCreate(View):
+    def post(self, *args, **kwargs):
+        customer = Customer.objects.get(id=self.kwargs['pk'])
+        new_address_name = self.request.POST.get('name', None)
+        st = self.request.POST.get('estado', None)
+        ct = self.request.POST.get('cidade', None)
+        state = State.objects.get(pk=st)
+        city = City.objects.get(pk=ct)
+        address = Address(
+            name=new_address_name,
+            owner_customer=customer,
+            state=state,
+            city=city,
+            street=self.request.POST.get('street', None),
+            number=self.request.POST.get('number', None),
+            further_info=self.request.POST.get('further_info', None),
+            neighborhood=self.request.POST.get('neighborhood', None),
+            zip_code=self.request.POST.get('zip_code', None)
+        )
+        address.save()
+
+        messages.success(self.request, 'Endereço cadastrado com sucesso')
+        return HttpResponseRedirect(reverse('view_customer', args=[customer.pk]) + '#tab-contact')
+
 
 class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
     template_name = 'password_reset.html'

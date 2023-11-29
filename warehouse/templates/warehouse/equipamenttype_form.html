@@ -5,12 +5,13 @@
         <tr>
             <td width="90%"><h4 style="padding-top: 10px;">Novo tipo de equipamento</h4></td>
             <td align="right"><a href="{% url 'list_equipament_type' %}"
-                     class="button button-small button-circle button-border button-red">Cancelar</a></td>
+								 class="button button-small button-circle button-border button-red">Cancelar</a></td>
+			<td align="right"><a href="{% url 'list_equipament_brand' %}"
+								 class="button button-small button-circle button-border">Nova marca</a></td>
         </tr>
     </table>
 </div>
 
-<!--<div class="form-result"></div>-->
 
 <div class="row">
 	<div class="col-lg">
@@ -34,19 +35,23 @@
 					<div class="card-body">
 						<div class="row">
 							<input type="hidden" name="company" value="{{company}}">
-							<div class="col-md-6 form-group">
+							<div class="col-6 form-group">
 								<label for="brand">Marca<small class="text-danger">*</small></label>
-								<input type="text" name="brand" id="brand" class="form-control required"
-									   value="">
+								<select name="brand" class="form-select" id="brand_ddl" required>
+									<option value="" selected>-- Marca --</option>
+									{% for item in brands %}
+									<option value="{{item.pk}}">{{item}}</option>
+									{% endfor %}
+								</select>
 							</div>
 							<div class="col-6 form-group">
 								<label for="model">Modelo<small class="text-danger">*</small></label>
 								<input type="text" name="model" id="model"
-									   class="form-control required" value="">
+									   class="form-control" value="" required>
 							</div>
 							<div class="col-6 form-group">
 								<label for="price">Preço unitário</label>
-								<input type="text" name="price" id="price" class="form-control money" value="">
+								<input type="text" name="price" id="price" class="form-control money" value="" required>
 							</div>
 							<div class="col-6 form-group" style="margin-top: 25px;">
 								<button type="submit" name="eq_type-submit"

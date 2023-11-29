@@ -27,5 +27,6 @@ urlpatterns = [
     path('customer/update-cy-subscription/<int:pk>/', UpdateCustCySubscription.as_view(), name='update_customer_cy_subscription'),
     path('customer/update-site/<int:pk>/', UpdateCustSite.as_view(), name='update_customer_site'),
     path('customer/update-observation/<int:pk>/', UpdateCustObservation.as_view(), name='update_customer_observation'),
-    path('customer/contact/create/<int:pk>/', ContactCreate.as_view(), name='customer_contact_create')
+    path('customer/contact/create/<int:pk>/', ContactCreate.as_view(), name='customer_contact_create'),
+    path('customer/address/create/<int:pk>/', AddressCreate.as_view(), name='customer_address_create')
 ]
