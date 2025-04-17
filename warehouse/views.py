@@ -238,7 +238,7 @@ class EquipamentBrandCreate(View):
             messages.info(self.request,  format_html("{}<br>"
                                                      "Para cadastrar mesmo assim, <a href='{}'>clique aqui</a>",
                                                      message,
-                                                     reverse('create_almost_same_brand')
+                                                     reverse('create_almost_same_brand', kwargs={'new_brand':name})
                                                      )
                           )
             return HttpResponseRedirect(reverse('list_equipament_brand'))
@@ -466,3 +466,13 @@ class AccessoryQuantityUpdate(View):
 
         messages.info(self.request, f'Atualização bem sucedida. {msg}')
         return HttpResponseRedirect(reverse('list_accessory', args=[0]))
+
+
+@method_decorator(login_required, name='dispatch')
+class AccessoryDelete(DeleteView):
+    model = Accessory
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.soft_delete()
+        messages.error(request, f'Executado')
+        return HttpResponseRedirect(reverse('list_accessory', kwargs={'similar':0}))

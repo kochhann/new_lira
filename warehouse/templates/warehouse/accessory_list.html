@@ -110,7 +110,7 @@
                             </td>
                             <td>{{ item.price }}</td>
                             <td><a href="#"><i class="icon-eye"></i></a></td>
-                            <td><a href="#"><i class="icon-trash"></i></a></td>
+                            <td><a href="{% url 'delete_accessory' item.pk %}"><i class="icon-trash"></i></a></td>
                         </tr>
                         <tr>
                             <td colspan="5" >
@@ -170,7 +170,6 @@
                     </tbody>
                 </table>
             </div>
-
         </div>
     </div>
 </section>

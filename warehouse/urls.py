@@ -19,5 +19,6 @@ urlpatterns = [
     path('equipament/delete/<int:pk>/', EquipamentDelete.as_view(), name='delete_equipament'),
     path('accessory/list/<int:similar>/', AccessoryList.as_view(), name='list_accessory'),
     path('accessory/create/', AccessoryCreate.as_view(), name='create_accessory'),
-    path('accessory/update_qtt/<int:pk>/', AccessoryQuantityUpdate.as_view(), name='acc_quantity')
+    path('accessory/update_qtt/<int:pk>/', AccessoryQuantityUpdate.as_view(), name='acc_quantity'),
+    path('accessory/delete/<int:pk>/', AccessoryDelete.as_view(), name='delete_accessory')
 ]

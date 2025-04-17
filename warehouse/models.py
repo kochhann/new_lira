@@ -92,6 +92,7 @@ class Accessory(Base):
     def soft_delete(self):
         self.active = False
         self.deactivation_date = timezone.now()
+        self.quantity = 0
         self.save()
 
     def reactivate(self):
