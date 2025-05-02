@@ -19,6 +19,7 @@ urlpatterns = [
     path('customer/create/load-cidades', load_cidades, name='load_cidades'),
     path('customer/detail/<int:pk>/load-cidades-oncreate', load_cidades_oncreate, name='load_cidades_oncreate'),
     path('customer/detail/<int:pk>/', CustomerView.as_view(), name='view_customer'),
+    path('customer/search/<slug:search_param>/', CustomerSearch.as_view(), name='search_customer'),
     path('customer/update-accoutable/<int:pk>/', UpdateCustAccountable.as_view(), name='update_customer_accountable'),
     path('customer/update-acc-id/<int:pk>/', UpdateCustAccID.as_view(), name='update_customer_acc_id'),
     path('customer/update-name/<int:pk>/', UpdateCustName.as_view(), name='update_customer_name'),

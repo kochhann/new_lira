@@ -6,6 +6,7 @@ from django.contrib.staticfiles.urls import static
 urlpatterns = [
     path('', include('core.urls')),
     path('wms/', include('warehouse.urls')),
+    path('rent/', include('rent.urls')),
     path('manager/', admin.site.urls),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

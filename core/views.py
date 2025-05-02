@@ -2,6 +2,7 @@ import re
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.db import transaction
+from django.db.models import Q
 from django.shortcuts import render
 from django.contrib import messages
 from django.urls import reverse_lazy, reverse
@@ -190,6 +191,20 @@ class CustomerList(ListView):
         context['pt_breadcrumb2'] = 'Clientes'
         context['customers'] = customers
         return context
+
+
+@method_decorator(login_required, name='dispatch')
+class CustomerSearchView(ListView):
+    template_name = 'customer_search.html'
+    model = Customer
+
+    def get_queryset(self):
+        q = self.kwargs['search_param']
+        object_list = []
+        if search_param:
+            object_list =  Customer.objects.filter(Q(name__icontains=q) | Q(corporate_name__icontains=q)
+                                                   | Q(comp_id__icontains=q))
+        return object_list
 
 
 @method_decorator(login_required, name='dispatch')
