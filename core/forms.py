@@ -1,13 +1,7 @@
 from django import forms
 import re
 from django.core.exceptions import ObjectDoesNotExist
-from .models import (
-    OpUser,
-    Customer,
-    State,
-    City,
-    Address
-)
+from .models import *
 
 
 class OpUserForm(forms.ModelForm):
@@ -30,7 +24,6 @@ class ContactForm(forms.ModelForm):
     zip_code = forms.CharField(label='CEP')
     phone = forms.CharField(label='Telefone')
     email = forms.CharField(label='E-mail')
-
 
 
 class CustomerForm(forms.ModelForm):
@@ -67,3 +60,10 @@ class CustomerForm(forms.ModelForm):
                 f'CNPJ / CPF já consta na sua base de clientes! - {check.name}'])
         # return any errors if found
         return self.cleaned_data
+
+
+class SearchCustomerForm(forms.ModelForm):
+    class Meta:
+        model = SearchClass
+        fields = ['search_param',]
+

@@ -239,3 +239,7 @@ class Address(models.Model):
     class Meta:
         verbose_name = 'Endereço'
         verbose_name_plural = 'Endereços'
+
+
+class SearchClass(models.Model):
+    search_param = models.CharField('Parametro', max_length=100, blank=True, null=True)

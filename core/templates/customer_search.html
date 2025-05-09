@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="heading-block fancy-title nobottomborder">
+    <table class="table">
+        <tr>
+			<td width="90%"><h4 style="padding-top: 10px;">Buscar clientes</h4></td>
+			<td align="right"><a href="{{request.META.HTTP_REFERER}}"
+                     class="button button-small button-circle button-border button-red">Voltar</a></td>
+        </tr>
+    </table>
+</div>
+
+<div class="row">
+	<div class="col-lg">
+		<form id="custsearch-form" class="row" action="#" method="get" enctype="multipart/form-data">
+			{{ form.non_field_errors }}
+			{% if form.errors %}
+			<div class="style-msg errormsg">
+				<div class="sb-msg"  style="padding-bottom:0;">
+					{{ form.comp_id.errors }}
+				</div>
+			</div>
+			{% endif %}
+			{% csrf_token %}
+			<div class="form-process">
+				<div class="css3-spinner">
+					<div class="css3-spinner-scaler"></div>
+				</div>
+			</div>
+			<div class="col-12">
+				<div class="card bg-light">
+					<div class="card-body">
+						<div class="row">
+							<input type="hidden" name="company" value="{{company}}">
+							<div class="col-md-12 form-group">
+<!--								<label for="search_param">Tipo<small class="text-danger">*</small></label>-->
+								<input type="text" name="search_param" id="search_param" class="form-control required"
+									   placeholder="Escreva parte do nome ou do cnpj / cpf">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-6">
+				<button type="submit" name="custsearch-submit" style="margin: 15px;"
+						class="button button-small button-circle button-border">Buscar</button>
+			</div>
+
+		</form>
+
+	</div>
+
+</div>
+
+{% endblock %}

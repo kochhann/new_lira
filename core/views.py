@@ -20,7 +20,8 @@ from django.contrib.auth.views import (
     LoginView,
     PasswordResetView,
     PasswordResetConfirmView,
-    PasswordResetCompleteView
+    PasswordResetCompleteView,
+    TemplateView
 )
 from django.views.generic import (
     TemplateView,
@@ -32,11 +33,7 @@ from django.views.generic import (
     View
 )
 from .models import *
-from .forms import (
-    OpUserForm,
-    CustomerForm,
-    ContactForm
-)
+from .forms import *
 
 
 def load_cidades(request):
@@ -180,7 +177,9 @@ class CustomerList(ListView):
     template_name = 'customer_list.html'
 
     def get_context_data(self, **kwargs):
+        print('lista')
         context = super(CustomerList, self).get_context_data(**kwargs)
+        list_type = self.kwargs['list_type']
         us = self.request.user
         op = OpUser.objects.get(user=us.pk)
         comp = op.company
@@ -190,21 +189,39 @@ class CustomerList(ListView):
         context['pt_h1'] = 'Gestão de clientes'
         context['pt_breadcrumb2'] = 'Clientes'
         context['customers'] = customers
+        context['list_type'] = list_type
         return context
 
 
 @method_decorator(login_required, name='dispatch')
-class CustomerSearchView(ListView):
-    template_name = 'customer_search.html'
-    model = Customer
+class SearchCustomerView(View):
+    search_param = None
+    results = []
+    form_class = SearchCustomerForm
 
-    def get_queryset(self):
-        q = self.kwargs['search_param']
-        object_list = []
-        if search_param:
-            object_list =  Customer.objects.filter(Q(name__icontains=q) | Q(corporate_name__icontains=q)
-                                                   | Q(comp_id__icontains=q))
-        return object_list
+    def get(self, request):
+        form = self.form_class
+        us = self.request.user
+        op = OpUser.objects.get(user=us.pk)
+        comp = op.company
+
+        if 'search_param' in request.GET:
+
+            form = self.form_class(request.GET)
+            if form.is_valid():
+                search_param = form.cleaned_data['search_param']
+                customers = Customer.objects.filter(Q(name__icontains=search_param) | Q(corporate_name__icontains=search_param)
+                                                    | Q(comp_id__icontains=search_param), owner_comp=comp)
+                context = {
+                    'results': customers,
+                    'list_type': 1
+                }
+                return render(request, 'customer_list.html', context)
+                # return HttpResponseRedirect(reverse("list_customer", args=[1]), {'results': customers})
+                pass
+        return render(request, 'customer_search.html', {'form': form})
+        pass
+    pass
 
 
 @method_decorator(login_required, name='dispatch')

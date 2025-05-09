@@ -5,7 +5,7 @@
     <table class="table" style="table-layout: auto;">
         <tr>
             <td width="60%"><h4 style="padding-top: 10px;">Detales do cliente</h4></td>
-            <td align="right"><a href="{% url 'list_customer' %}"
+            <td align="right"><a href="{{request.META.HTTP_REFERER}}"
                      class="button button-small button-circle button-border button-red">Voltar</a></td>
         </tr>
     </table>
