@@ -42,6 +42,8 @@ class ContractCreate(CreateView):
         context = super(ContractCreate, self).get_context_data(**kwargs)
         us = self.request.user
         op = OpUser.objects.get(user=us.pk)
+        cust_id = self.kwargs['cust_id']
+        customer = Customer.objects.get(id=cust_id)
         type_of = self.kwargs['type_of']
         to_txt = ''
         comp = op.company
@@ -60,6 +62,7 @@ class ContractCreate(CreateView):
         context['pt_breadcrumb2'] = 'locações'
         context['type_of'] = to_txt
         context['type_of_n'] = type_of
+        context['customer'] = customer
         return context
 
     # def form_valid(self, form, *args, **kwargs):

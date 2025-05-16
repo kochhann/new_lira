@@ -32,20 +32,36 @@
 					<div class="card-body">
 						<div class="row">
 							<input type="hidden" name="company" value="{{company}}">
-							<div class="col-md-6 form-group">
-								<label for="type_of">Tipo<small class="text-danger">*</small></label>
-								<input type="text" name="type_of" id="type_of" class="form-control cpfcnpj required"
-									   placeholder="">
+							<input type="hidden" name="type_of" value="{{type_of_n}}">
+							<input type="hidden" name="customer" value="{{customer.id}}">
+							<div class="col-6 form-group">
+								<label for="customer_name">Nome / Razão Social</label>
+								<input type="text" name="customer_name" id="customer_name"
+									   class="form-control required" value="{{customer.corporate_name}}" disabled>
 							</div>
 							<div class="col-6 form-group">
-								<label for="customer_name">Nome / Razão Social<small class="text-danger">*</small></label>
-								<input type="text" name="customer_name" id="customer_name"
-									   class="form-control required" value="">
+								<label for="">CNPJ / CPF</label>
+								<input type="text" name="comp_id"
+									   class="form-control required" value="{{customer.id_printable}}" disabled>
+							</div>
+							<div class="col-md-6 bottommargin-sm">
+								<label for="">Data de início</label>
+								<input type="text" value="" class="form-control text-start component-datepicker today"
+									   placeholder="MM/DD/YYYY" name="start_date">
+							</div>
+							<div class="col-md-6 bottommargin-sm">
+								<label for="">Highlight Today</label>
+								<input type="text" value="" class="form-control text-start datepicker today"
+									   placeholder="MM/DD/YYYY">
 							</div>
 							<div class="col-12 form-group">
 								<textarea name="observations" id="obs_id" class="form-control" cols="30" rows="5"
 										  maxlength="1000" style="resize: none;" onkeyup="countChar(this)"></textarea>
 								<div id="charNum">1000</div>
+							</div>
+							<div class="col-md-6 bottommargin-sm">
+								<label for="">Default Date</label>
+								<input type="text" value="" class="form-control text-start component-datepicker default" placeholder="MM/DD/YYYY">
 							</div>
 						</div>
 					</div>

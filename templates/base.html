@@ -27,6 +27,8 @@
 
 	<!-- DatePicker CSS -->
 	<link rel="stylesheet" href="{% static 'application/css/components/datepicker.css' %}" type="text/css" />
+	<link rel="stylesheet" href="{% static 'application/css/components/timepicker.css' %}" type="text/css" />
+	<link rel="stylesheet" href="{% static 'application/css/components/daterangepicker.css' %}" type="text/css" />
 
 	<link rel="stylesheet" href="{% static 'application/css/custom.css' %}" type="text/css" />
 
@@ -51,64 +53,66 @@
 		<!-- Header
 		============================================= -->
 		<header id="header" class="header-size-sm border-bottom-0">
-			<div class="container">
-				<div class="header-row justify-content-lg-between">
+			<div id="header-wrap">
+				<div class="container">
+					<div class="header-row justify-content-lg-between">
 
-					<!-- Logo
-					============================================= -->
-					<div id="logo">
-						<a href="{% url 'index' %}" class="standard-logo" data-dark-logo="https://kochhann.sirv.com/lirasoft/assets/Logo%20Site%20Lirasoft.png">
-							<img src="https://kochhann.sirv.com/lirasoft/assets/Logo%20Site%20Lirasoft.png" alt="Lira Logo" style="height: 100px;"></a>
-						<a href="{% url 'index' %}" class="retina-logo" data-dark-logo="https://kochhann.sirv.com/lirasoft/assets/logo_lira.jpg">
-							<img src="https://kochhann.sirv.com/lirasoft/assets/logo_lira.jpg" alt="Lira Logo" style="height: 100px;"></a>
-					</div><!-- #logo end -->
-					<div id="primary-menu-trigger">
-						<svg class="svg-trigger" viewBox="0 0 100 100"><path d="m 30,33 h 40 c 3.722839,0 7.5,3.126468 7.5,8.578427 0,5.451959 -2.727029,8.421573 -7.5,8.421573 h -20"></path><path d="m 30,50 h 40"></path><path d="m 70,67 h -40 c 0,0 -7.5,-0.802118 -7.5,-8.365747 0,-7.563629 7.5,-8.634253 7.5,-8.634253 h 20"></path></svg>
-					</div>
+						<!-- Logo
+						============================================= -->
+						<div id="logo">
+							<a href="{% url 'index' %}" class="standard-logo" data-dark-logo="https://kochhann.sirv.com/lirasoft/assets/Logo%20Site%20Lirasoft.png">
+								<img src="https://kochhann.sirv.com/lirasoft/assets/Logo%20Site%20Lirasoft.png" alt="Lira Logo" style="height: 100px;"></a>
+							<a href="{% url 'index' %}" class="retina-logo" data-dark-logo="https://kochhann.sirv.com/lirasoft/assets/logo_lira.jpg">
+								<img src="https://kochhann.sirv.com/lirasoft/assets/logo_lira.jpg" alt="Lira Logo" style="height: 100px;"></a>
+						</div><!-- #logo end -->
+						<div id="primary-menu-trigger">
+							<svg class="svg-trigger" viewBox="0 0 100 100"><path d="m 30,33 h 40 c 3.722839,0 7.5,3.126468 7.5,8.578427 0,5.451959 -2.727029,8.421573 -7.5,8.421573 h -20"></path><path d="m 30,50 h 40"></path><path d="m 70,67 h -40 c 0,0 -7.5,-0.802118 -7.5,-8.365747 0,-7.563629 7.5,-8.634253 7.5,-8.634253 h 20"></path></svg>
+						</div>
 
-					<!-- Primary Navigation
-					============================================= -->
-					<nav class="primary-menu">
+						<!-- Primary Navigation
+						============================================= -->
+						<nav class="primary-menu">
 
-						<ul class="menu-container">
-							<!-- Landing page menu -->
-							{% if user.is_anonymous %}
-							<li class="menu-item">
-								<a class="menu-link" href="{% url 'index' %}"><div>Home</div></a>
-							</li>
-							<li class="menu-item">
-								<a class="menu-link" href="{% url 'login' %}"><div>Acessar</div></a>
-							</li>
-							{% else %}
-							<!-- Application page menu -->
-								{% if user.is_staff %}
-							<li class="menu-item">
-								<a class="menu-link" href="{% url 'admin:index' %}"  style="color:darkred;"><div>Administração</div></a>
-							</li>
+							<ul class="menu-container">
+								<!-- Landing page menu -->
+								{% if user.is_anonymous %}
+								<li class="menu-item">
+									<a class="menu-link" href="{% url 'index' %}"><div>Home</div></a>
+								</li>
+								<li class="menu-item">
+									<a class="menu-link" href="{% url 'login' %}"><div>Acessar</div></a>
+								</li>
+								{% else %}
+								<!-- Application page menu -->
+									{% if user.is_staff %}
+								<li class="menu-item">
+									<a class="menu-link" href="{% url 'admin:index' %}"  style="color:darkred;"><div>Administração</div></a>
+								</li>
+									{% endif %}
+								<li class="menu-item">
+									<a class="menu-link" href="{% url 'list_customer' 0 %}"><div>Clientes</div></a>
+								</li>
+								<li class="menu-item">
+									<a class="menu-link" href="{% url 'rent_index' %}"><div>Locações</div></a>
+								</li>
+								<li class="menu-item">
+									<a class="menu-link" href="{% url 'wh_index' %}"><div>Inventário</div></a>
+								</li>
+								<li class="menu-item">
+									<a class="menu-link" href="#"><div>Faturamento</div></a>
+								</li>
+								<li class="menu-item">
+									<a class="menu-link" href="{% url 'list_user' %}"><div>Acessos</div></a>
+								</li>
+								<li class="menu-item">
+									<a class="menu-link" href="{% url 'logout' %}"><div>Sair</div></a>
+								</li>
 								{% endif %}
-							<li class="menu-item">
-								<a class="menu-link" href="{% url 'list_customer' 0 %}"><div>Clientes</div></a>
-							</li>
-							<li class="menu-item">
-								<a class="menu-link" href="{% url 'rent_index' %}"><div>Locações</div></a>
-							</li>
-							<li class="menu-item">
-								<a class="menu-link" href="{% url 'wh_index' %}"><div>Inventário</div></a>
-							</li>
-							<li class="menu-item">
-								<a class="menu-link" href="#"><div>Faturamento</div></a>
-							</li>
-							<li class="menu-item">
-								<a class="menu-link" href="{% url 'list_user' %}"><div>Acessos</div></a>
-							</li>
-							<li class="menu-item">
-								<a class="menu-link" href="{% url 'logout' %}"><div>Sair</div></a>
-							</li>
-							{% endif %}
-						</ul>
+							</ul>
 
-					</nav><!-- #primary-menu end -->
+						</nav><!-- #primary-menu end -->
 
+					</div>
 				</div>
 			</div>
 		</header><!-- #header end -->
@@ -213,7 +217,9 @@
 
 	<!-- DatePicker
 	============================================= -->
-	<script src="{% static 'application/js/components/datepicker.js' %}"></script>
+	<script src="{% static 'application/js/components/moment.js' %}"></script>
+	<script src="{% static 'application/js/components/timepicker.js' %}"></script>
+	<script src="{% static 'application/js/components/daterangepicker.js' %}"></script>
 
 	<!-- Footer Scripts
 	============================================= -->
@@ -233,7 +239,7 @@
 		}
 	</script>
 
-	<!-- Date field configuration -->
+	<!-- Data table configuration -->
 	<script>
 		$(document).ready(function () {
             $('#datatable1').dataTable({

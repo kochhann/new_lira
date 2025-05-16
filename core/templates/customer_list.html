@@ -18,17 +18,12 @@
         <div class="container clearfix">
 
             <div class="table-responsive">
-                {% if list_type == 0 %}
-                <label>retornou 0</label>
-                {% elif list_type == 1 %}
-                <label>retornou 1 {{results.count}}</label>
-                {% endif %}
                 <table id="datatable1" class="table table-striped table-bordered" cellspacing="0" width="100%">
                     <thead>
                         <tr>
                             <th>Nome {{list_type}}</th>
                             <th>CNPJ / CPF</th>
-                            <th>Ver</th>
+                            <th width="10%">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -38,8 +33,18 @@
                             <td>{{ item.name }}</td>
                             <td>{{ item.id_printable}}</td>
                             <td>
-                                <a href="{% url 'view_customer' item.pk %}"><i class="icon-eye"></i></a>
-                                <a href="{% url 'search_customer' %}"><i class="icon-file"></i></a>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Selecione
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="{% url 'view_customer' item.pk %}">Detahes / Editar</a>
+                                        <a class="dropdown-item" href="{% url 'create_contract' 1 item.pk %}">Novo Contrato Mensal</a>
+                                        <a class="dropdown-item" href="{% url 'create_contract' 2 item.pk %}">Novo Contrato Diária</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#">Excluir</a>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                         {% endfor %}
@@ -49,8 +54,18 @@
                             <td>{{ item.name }}</td>
                             <td>{{ item.id_printable}}</td>
                             <td>
-                                <a href="{% url 'view_customer' item.pk %}"><i class="icon-eye"></i></a>
-                                <a href="{% url 'search_customer' %}"><i class="icon-file"></i></a>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Selecione
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="{% url 'view_customer' item.pk %}">Detahes / Editar</a>
+                                        <a class="dropdown-item" href="{% url 'create_contract' 1 item.pk %}">Novo Contrato Mensal</a>
+                                        <a class="dropdown-item" href="{% url 'create_contract' 2 item.pk %}">Novo Contrato Diária</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#">Excluir</a>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                         {% endfor %}
@@ -62,5 +77,4 @@
         </div>
     </div>
 </section>
-
 {% endblock %}
