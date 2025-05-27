@@ -7,20 +7,10 @@ from .models import (
 
 
 class ContractForm(forms.ModelForm):
-    # company = forms.IntegerField(required=False)
-    # estado = forms.ModelMultipleChoiceField(queryset=State.objects.all())
-    # cidade = forms.ModelMultipleChoiceField(queryset=City.objects.all())
-    # street = forms.CharField(label='Rua')
-    # number = forms.CharField(label='Número')
-    # further_info = forms.CharField(label='Complemento', required=False)
-    # neighborhood = forms.CharField(label='Bairro')
-    # zip_code = forms.CharField(label='CEP')
-    # phone = forms.CharField(label='Telefone')
-    # email = forms.CharField(label='E-mail')
 
     class Meta:
         model = Contract
-        fields = '__all__'
+        fields = ['owner_comp','type_of','customer','observations','start_date']
 
     # this function will be used for the validation
     # def clean(self):

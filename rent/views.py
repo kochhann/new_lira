@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.contrib import messages
 from django.views.generic import (
     CreateView,
     ListView,
@@ -65,65 +66,18 @@ class ContractCreate(CreateView):
         context['customer'] = customer
         return context
 
-    # def form_valid(self, form, *args, **kwargs):
-    #     us = self.request.user
-    #     op = OpUser.objects.get(user=us.pk)
-    #     comp = op.company
-    #     c_id = form.cleaned_data.get('comp_id')
-    #     customer = form.save(commit=False)
-    #     if len(c_id) < 18:
-    #         customer.type_of = 2
-    #     customer.owner_comp_id = comp.pk
-    #     id = re.findall("\d+", customer.comp_id)
-    #     customer.comp_id = ''.join(id)
-    #     customer.save()
-    #     ## Main address insert
-    #     st = form.cleaned_data.get('estado')
-    #     ct = form.cleaned_data.get('cidade')
-    #     street = form.cleaned_data.get('street')
-    #     for i in st:
-    #         state = i
-    #     for i in ct:
-    #         city = i
-    #     address = Address(
-    #         name='Principal',
-    #         owner_customer=customer,
-    #         state=state,
-    #         city=city,
-    #         street=form.cleaned_data.get('street'),
-    #         number=form.cleaned_data.get('number'),
-    #         further_info=form.cleaned_data.get('further_info'),
-    #         neighborhood=form.cleaned_data.get('neighborhood'),
-    #         zip_code=form.cleaned_data.get('zip_code')
-    #     )
-    #     address.save()
-    #     ## Main phone
-    #     ph = form.cleaned_data.get('phone')
-    #     l_full =  re.findall("\d+", ph)
-    #     full = ''.join(l_full)
-    #     ddd = full[:2]
-    #     phone = full[2:len(full)]
-    #     new_phone = Telephone(
-    #         name='Principal',
-    #         owner_customer=customer,
-    #         code=ddd,
-    #         number=phone
-    #     )
-    #     new_phone.save()
-    #     ## Main e-mail
-    #     new_mail = Email(
-    #         name='Principal',
-    #         owner_customer=customer,
-    #         email=form.cleaned_data.get('email')
-    #     )
-    #     new_mail.save()
-    #     messages.success(self.request, 'Cliente cadastrado com sucesso')
-    #     return super(CustomerCreate, self).form_valid(form)
-    #
-    # def form_invalid(self, form, *args, **kwargs):
-    #     print(form.errors)
-    #     # messages.error(self.request, 'Erro no cadastro: ' + str(form.errors))
-    #     return super(CustomerCreate, self).form_invalid(form, *args, **kwargs)
+    def form_valid(self, form, *args, **kwargs):
+        cnpj = form.cleaned_data.get('customer')
+        date = form.cleaned_data.get('start_date')
+        # new_operator = form.save(commit=False)
+        print(f'{cnpj}')
+        print(f'{date}')
+        messages.success(self.request, 'Contrato criado com sucesso')
+        return super(ContractCreate, self).form_valid(form)
+
+    def form_invalid(self, form, *args, **kwargs):
+        print(str(form.errors))
+        return super(ContractCreate, self).form_invalid(form, *args, **kwargs)
 
 
 @method_decorator(login_required, name='dispatch')
