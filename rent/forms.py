@@ -7,10 +7,12 @@ from .models import (
 
 
 class ContractForm(forms.ModelForm):
+    fee = forms.CharField(required=False)
 
     class Meta:
         model = Contract
-        fields = ['owner_comp','type_of','customer','observations','start_date']
+        fields = ['owner_comp','type_of','customer','observations','start_date', 'end_date',
+                  'delivery_date', 'invoice', 'ticket', 'report', 'billing_day']
 
     # this function will be used for the validation
     # def clean(self):

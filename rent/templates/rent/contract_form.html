@@ -33,7 +33,7 @@
 						<div class="row">
 							<input type="hidden" name="owner_comp" value="{{company.id}}">
 							<input type="hidden" name="type_of" value="{{type_of_n}}">
-							<input type="hidden" name="customer" value="{{customer}}">
+							<input type="hidden" name="customer" value="{{customer.id}}">
 							<div class="col-6 form-group">
 								<label for="customer_name">Nome / Razão Social</label>
 								<input type="text" name="customer_name" id="customer_name"
@@ -46,15 +46,38 @@
 							</div>
 							<div class="col-md-6 form-group">
 								<label>Data Inicial</label>
-								<input type="text" name="start_date" value="" class="form-control" placeholder="DD/MM/YYYY">
+								<input type="text" name="start_date" value="" class="form-control" placeholder="DD/MM/AAAA">
 							</div>
 							<div class="col-md-6 form-group">
 								<label>Data Final</label>
-								<input type="text" name="end_date" value="" class="form-control" placeholder="DD/MM/YYYY">
+								<input type="text" name="end_date" value="" class="form-control" placeholder="DD/MM/AAAA">
 							</div>
 							<div class="col-md-6 form-group">
 								<label>Entrega de Equipamentos</label>
-								<input type="text" name="delivery_date" value="" class="form-control" placeholder="DD/MM/YYYY">
+								<input type="text" name="delivery_date" value="" class="form-control" placeholder="DD/MM/AAAA">
+							</div>
+
+							<div class="col-md-6 form-group">
+								<div>
+									<input id="invoice" class="checkbox-style" name="invoice" type="checkbox">
+									<label for="invoice" class="checkbox-style-1-label">Nota Fiscal</label>
+								</div>
+								<div>
+									<input id="ticket" class="checkbox-style" name="ticket" type="checkbox">
+									<label for="ticket" class="checkbox-style-1-label">Boleto</label>
+								</div>
+								<div>
+									<input id="report" class="checkbox-style" name="report" type="checkbox">
+									<label for="report" class="checkbox-style-1-label">Contabilidade</label>
+								</div>
+							</div>
+							<div class="col-6 form-group">
+								<label for="fee">Valor</label>
+								<input type="text" name="fee" id="fee" class="form-control money" value="" required>
+							</div>
+							<div class="col-6 form-group">
+								<label for="billing_day">Observação do boleto</label>
+								<input type="text" name="billing_day" id="billing_day" class="form-control" value="">
 							</div>
 
 							<div class="col-12 form-group">

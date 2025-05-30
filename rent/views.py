@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from decimal import Decimal
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -67,11 +68,11 @@ class ContractCreate(CreateView):
         return context
 
     def form_valid(self, form, *args, **kwargs):
-        cnpj = form.cleaned_data.get('customer')
-        date = form.cleaned_data.get('start_date')
-        # new_operator = form.save(commit=False)
-        print(f'{cnpj}')
-        print(f'{date}')
+        fee = form.cleaned_data.get('fee')
+        result = Decimal(fee.replace('.', '').replace(',', '.'))
+        contract = form.save(commit=False)
+        contract.fee = result
+        contract.save()
         messages.success(self.request, 'Contrato criado com sucesso')
         return super(ContractCreate, self).form_valid(form)
 

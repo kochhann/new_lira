@@ -26,7 +26,9 @@ class Contract(Base):
     delivery_date = models.DateField('Entrega', blank=True, null=True, default=None)
     type_of = models.IntegerField('Tipo', choices=TYPE_CHOICES, blank=False, null=False, default=1)
     observations = models.CharField('Observações', max_length=300, blank=True, null=True)
-    ticket = models.BooleanField('Boleto', blank=True, default=True)
+    ticket = models.BooleanField('Boleto', blank=True, default=False)
+    invoice = models.BooleanField('Nota Fiscal', blank=True, default=False)
+    report = models.BooleanField('Contador', blank=True, default=False)
     fee = models.DecimalField('Preço', max_digits=100, decimal_places=2, blank=True, default=True)
     billing_day = models.CharField('Vencimento Boleto', max_length=10, blank=True, null=True)
 
